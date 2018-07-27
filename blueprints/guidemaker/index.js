@@ -31,7 +31,9 @@ module.exports = {
             // console.log(node, node.arguments)
             const configNode = node.arguments.find(element => element.type === 'ObjectExpression');
 
-            let fingerprint = configNode.properties.find(property => property.key.value === 'fingerprint');
+            let fingerprint = configNode.properties.find(property => {
+              return property.key.name === 'fingerprint'
+            });
 
             if(!fingerprint) {
               fingerprint = builders.property(
@@ -43,19 +45,24 @@ module.exports = {
             }
 
             // remove image extensions from the fingerprint config
-            const properties = fingerprint.value.properties.filter(property => property.key.value !== 'extensions');
+            let extensions = fingerprint.value.properties.find(property => property.key.name === 'extensions');
 
-            properties.push(recast.types.builders.property(
-              'init',
-              builders.identifier('extensions'),
-              builders.arrayPattern([
-                builders.literal('js'),
-                builders.literal('css'),
-                builders.literal('map'),
-              ])
-            ));
+            if(!extensions) {
+              extensions = recast.types.builders.property(
+                'init',
+                builders.identifier('extensions'),
+                builders.arrayPattern([])
+              );
 
-            fingerprint.value.properties = properties;
+              fingerprint.value.properties.push(extensions);
+            }
+
+            extensions.value = builders.arrayPattern([
+              builders.literal('js'),
+              builders.literal('css'),
+              builders.literal('map'),
+            ]);
+
             return false;
           } else {
             this.traverse(path);
@@ -64,6 +71,38 @@ module.exports = {
       });
 
       writeFileSync('./ember-cli-build.js', recast.print(ast, { tabWidth: 2, quote: 'single' }).code);
+
+      const config = readFileSync('./config/environment.js');
+      const configAst = recast.parse(config);
+
+      recast.visit(configAst, {
+        visitVariableDeclaration: function (path) {
+          var node = path.node;
+
+          const env = node.declarations.find(declaration => declaration.id.name === 'ENV');
+
+          if (env) {
+            let blog = env.init.properties.find(property => property.key.value === 'ember-meta');
+
+            if(!blog) {
+              blog = builders.property(
+                'init',
+                builders.literal('ember-meta'),
+                builders.objectExpression([
+                  builders.property('init', builders.identifier('description'), builders.literal('Guides - Built with GuideMaker')),
+                ])
+              )
+              env.init.properties.push(blog);
+            }
+
+            return false;
+          }
+
+          this.traverse(path);
+        }
+      });
+
+      writeFileSync('./config/environment.js', recast.print(configAst, { tabWidth: 2, quote: 'single' }).code);
     });
   }
 };

@@ -71,7 +71,7 @@ module.exports = {
     // the source package does not support versions
     if(!existsSync(`${guidesSrcPkg}/versions.yml`)) {
       broccoliTrees.push(new StaticSiteJson(`${guidesSrcPkg}/guides`, {
-        contentFolder: `content`,
+        contentFolder: `content/release`,
         contentTypes: ['content', 'description'],
         type: 'contents',
         attributes: ['canonical'],
