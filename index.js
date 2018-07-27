@@ -32,7 +32,7 @@ module.exports = {
         .map(path => path.replace(/\/index$/, ''));
 
       mdFiles.forEach((file) => {
-        urls.push(`/${file}`)
+        urls.push(`/release/${file}`)
       });
     } else {
       const versions = yaml.safeLoad(readFileSync(`${guidesSrcPkg}/versions.yml`, 'utf8'));
