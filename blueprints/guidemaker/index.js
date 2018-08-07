@@ -89,6 +89,21 @@ module.exports = {
             if(locationType) {
               locationType.value = builders.literal('trailing-history');
             }
+
+            let historySupportMiddleware = env.init.properties.find(property => property.key.name === 'historySupportMiddleware');
+
+            if(historySupportMiddleware) {
+              historySupportMiddleware.value = builders.literal(true);
+            } else {
+              historySupportMiddleware = builders.property(
+                'init',
+                builders.identifier('historySupportMiddleware'),
+                builders.literal(true)
+              );
+
+              // insert just after the locationType
+              env.init.properties.splice(env.init.properties.indexOf(locationType) + 1, 0, historySupportMiddleware);
+            }
           }
 
           this.traverse(path);
