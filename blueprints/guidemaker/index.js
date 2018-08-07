@@ -3,6 +3,8 @@
 const recast = require('recast');
 const { readFileSync, writeFileSync } = require('fs');
 
+const builders = recast.types.builders;
+
 module.exports = {
   description: 'The default blueprint for guidemaker.',
 
@@ -17,7 +19,7 @@ module.exports = {
         'ember-cli-fastboot',
       ]
     }).then(() => {
-      const builders = recast.types.builders;
+
 
       const code = readFileSync('./ember-cli-build.js');
       const ast = recast.parse(code);
@@ -82,20 +84,11 @@ module.exports = {
           const env = node.declarations.find(declaration => declaration.id.name === 'ENV');
 
           if (env) {
-            let blog = env.init.properties.find(property => property.key.value === 'ember-meta');
+            let locationType = env.init.properties.find(property => property.key.name === 'locationType');
 
-            if(!blog) {
-              blog = builders.property(
-                'init',
-                builders.literal('ember-meta'),
-                builders.objectExpression([
-                  builders.property('init', builders.identifier('description'), builders.literal('Guides - Built with GuideMaker')),
-                ])
-              )
-              env.init.properties.push(blog);
+            if(locationType) {
+              locationType.value = builders.literal('trailing-history');
             }
-
-            return false;
           }
 
           this.traverse(path);
