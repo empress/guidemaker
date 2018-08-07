@@ -34,6 +34,8 @@ module.exports = {
       mdFiles.forEach((file) => {
         urls.push(`/release/${file}`)
       });
+
+      urls.push('/release')
     } else {
       const versions = yaml.safeLoad(readFileSync(`${guidesSrcPkg}/versions.yml`, 'utf8'));
 
