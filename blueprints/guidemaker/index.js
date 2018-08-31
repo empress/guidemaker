@@ -17,6 +17,7 @@ module.exports = {
       packages: [
         'prember@0.3.0',
         'ember-cli-fastboot',
+        'ember-algolia',
       ]
     }).then(() => {
 
