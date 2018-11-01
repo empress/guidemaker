@@ -15,13 +15,10 @@ module.exports = {
   afterInstall() {
     return this.addAddonsToProject({
       packages: [
-        'prember@0.3.0',
-        'ember-cli-fastboot',
-        'ember-algolia',
+        'prember',
+        'ember-cli-fastboot'
       ]
     }).then(() => {
-
-
       const code = readFileSync('./ember-cli-build.js');
       const ast = recast.parse(code);
 
@@ -105,6 +102,19 @@ module.exports = {
               // insert just after the locationType
               env.init.properties.splice(env.init.properties.indexOf(locationType) + 1, 0, historySupportMiddleware);
             }
+
+            let emberMeta = env.init.properties.find(property => property.key.value === 'ember-meta');
+
+            if(!emberMeta) {
+              emberMeta = builders.property(
+                'init',
+                builders.literal('ember-meta'),
+                builders.objectExpression([
+                  builders.property('init', builders.identifier('description'), builders.literal('Guides - Built with Guidemaker')),
+                ])
+              )
+              env.init.properties.push(emberMeta);
+            }
           }
 
           this.traverse(path);
@@ -113,5 +123,7 @@ module.exports = {
 
       writeFileSync('./config/environment.js', recast.print(configAst, { tabWidth: 2, quote: 'single' }).code);
     });
-  }
+  },
+
+  filesToRemove: ['app/templates/application.hbs'],
 };
