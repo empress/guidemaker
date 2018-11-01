@@ -6,8 +6,10 @@ const StaticSiteJson = require('broccoli-static-site-json');
 const walkSync = require('walk-sync');
 const writeFile = require('broccoli-file-creator');
 const yaml = require('js-yaml');
+const resolve = require('resolve');
 
 const { readFileSync, existsSync } = require('fs');
+const { join } = require('path');
 const { Serializer } = require('jsonapi-serializer');
 const { extname } = require('path');
 
@@ -61,14 +63,22 @@ module.exports = {
   },
 
   treeForPublic() {
-    if(!this.app.options.guidemaker || !this.app.options.guidemaker.source) {
-      throw new Error('You must define "source" in your ember-cli-build.')
+    let guidesSrcPkg;
+    let broccoliTrees = [];
+
+    if(this.app.options.guidemaker && this.app.options.guidemaker.source) {
+      guidesSrcPkg = resolve.sync(this.app.options.guidemaker.source, { basedir: process.cwd() });
+
+      if(existsSync(`${guidesSrcPkg}/public`)) {
+        broccoliTrees.push(new Funnel(`${guidesSrcPkg}/public`))
+      }
+    } else if(existsSync(join(process.cwd(), 'guides'))) {
+      guidesSrcPkg = process.cwd();
     }
 
-    const guidesSrcPkg = `node_modules/${this.app.options.guidemaker.source}`;
-    const guidesSourcePublic = new Funnel(`${guidesSrcPkg}/public`);
-
-    let broccoliTrees = [guidesSourcePublic];
+    if(!guidesSrcPkg) {
+      throw new Error('You must either define "source" in your ember-cli-build or have a `guides` directory in your project.')
+    }
 
     // the source package does not support versions
     if(!existsSync(`${guidesSrcPkg}/versions.yml`)) {
@@ -127,6 +137,8 @@ module.exports = {
 
     return {
       fastboot,
+      // TODO: investigate this bug - remove it and see why it breaks
+      'ember-collapsible-panel': config['ember-collapsible-panel'] || {}
     }
   },
 };
