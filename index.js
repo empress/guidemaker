@@ -91,7 +91,7 @@ module.exports = {
         contentFolder: `content/release`,
         contentTypes: ['content', 'description'],
         type: 'contents',
-        attributes: ['canonical'],
+        attributes: ['canonical', 'redirect'],
       }))
     } else {
       const versionsFile = writeFile('/content/versions.json', JSON.stringify(VersionsSerializer.serialize(versions)));
@@ -121,7 +121,7 @@ module.exports = {
         contentFolder: `content/${version}`,
         contentTypes: ['content', 'description'],
         type: 'contents',
-        attributes: ['canonical'],
+        attributes: ['canonical', 'redirect'],
       }));
 
       broccoliTrees.push(versionsFile);
