@@ -64,7 +64,16 @@ module.exports = {
 
   getGuidesSrcPkg() {
     if(this.app.options.guidemaker && this.app.options.guidemaker.source) {
-      return resolve.sync(this.app.options.guidemaker.source, { basedir: process.cwd() });
+      try {
+        return resolve.sync(this.app.options.guidemaker.source, { basedir: process.cwd() });
+      } catch (e) {
+        // try getting nodemodeules directly
+        let fullPath = join(process.cwd(), 'node_modules', this.app.options.guidemaker.source);
+        if(existsSync(fullPath)) {
+          return fullPath;
+        }
+      }
+
     } else if(existsSync(join(process.cwd(), 'guides'))) {
       return process.cwd();
     }
@@ -94,8 +103,8 @@ module.exports = {
         attributes: ['canonical', 'redirect'],
       }))
     } else {
-      const versionsFile = writeFile('/content/versions.json', JSON.stringify(VersionsSerializer.serialize(versions)));
       const versions = yaml.safeLoad(readFileSync(`${guidesSrcPkg}/versions.yml`, 'utf8'));
+      const versionsFile = writeFile('/content/versions.json', JSON.stringify(VersionsSerializer.serialize(versions)));
       let premberVersions = [...versions.allVersions, 'release'];
       const urls = premberVersions.map(version => `/${version}`);
 
