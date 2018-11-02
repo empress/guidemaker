@@ -23,7 +23,7 @@ const VersionsSerializer = new Serializer('version', {
 module.exports = {
   name: 'guidemaker',
   urlsForPrember() {
-    const guidesSrcPkg = `node_modules/${this.app.options.guidemaker.source}`;
+    const guidesSrcPkg = this.getGuidesSrcPkg();
     let urls = []
     if(!existsSync(`${guidesSrcPkg}/versions.yml`)) {
       const paths = walkSync(`${guidesSrcPkg}/guides`);
@@ -62,18 +62,23 @@ module.exports = {
     return urls;
   },
 
+  getGuidesSrcPkg() {
+    if(this.app.options.guidemaker && this.app.options.guidemaker.source) {
+      return resolve.sync(this.app.options.guidemaker.source, { basedir: process.cwd() });
+    } else if(existsSync(join(process.cwd(), 'guides'))) {
+      return process.cwd();
+    }
+  },
+
   treeForPublic() {
-    let guidesSrcPkg;
+    let guidesSrcPkg = this.getGuidesSrcPkg();
     let broccoliTrees = [];
 
-    if(this.app.options.guidemaker && this.app.options.guidemaker.source) {
-      guidesSrcPkg = resolve.sync(this.app.options.guidemaker.source, { basedir: process.cwd() });
-
+    // if there is an external guides source
+    if(guidesSrcPkg !== process.cwd()) {
       if(existsSync(`${guidesSrcPkg}/public`)) {
         broccoliTrees.push(new Funnel(`${guidesSrcPkg}/public`))
       }
-    } else if(existsSync(join(process.cwd(), 'guides'))) {
-      guidesSrcPkg = process.cwd();
     }
 
     if(!guidesSrcPkg) {
