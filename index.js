@@ -42,7 +42,7 @@ module.exports = {
       const versions = yaml.safeLoad(readFileSync(`${guidesSrcPkg}/versions.yml`, 'utf8'));
 
       let premberVersions = [...versions.allVersions, 'release'];
-      urls = [...urls, premberVersions.map(version => `/${version}`)];
+      urls = [...urls, ...premberVersions.map(version => `/${version}`)];
 
       premberVersions.forEach((premberVersion) => {
         const filesVersion = ['current', 'release'].includes(premberVersion) ? versions.currentVersion : premberVersion;
@@ -104,7 +104,7 @@ module.exports = {
       }))
     } else {
       const versions = yaml.safeLoad(readFileSync(`${guidesSrcPkg}/versions.yml`, 'utf8'));
-      const versionsFile = writeFile('/content/versions.json', JSON.stringify(VersionsSerializer.serialize(versions)));
+
       let premberVersions = [...versions.allVersions, 'release'];
       const urls = premberVersions.map(version => `/${version}`);
 
@@ -123,15 +123,16 @@ module.exports = {
         })
       });
 
-      // setting an ID so that it's not undefined
-      versions.id = 'versions';
-
       const jsonTrees = versions.allVersions.map((version) => new StaticSiteJson(`${guidesSrcPkg}/guides/${version}`, {
         contentFolder: `content/${version}`,
         contentTypes: ['content', 'description'],
         type: 'contents',
         attributes: ['canonical', 'redirect'],
       }));
+
+      // setting an ID so that it's not undefined
+      versions.id = 'versions';
+      const versionsFile = writeFile('/content/versions.json', JSON.stringify(VersionsSerializer.serialize(versions)));
 
       broccoliTrees.push(versionsFile);
       broccoliTrees = [...broccoliTrees, ...jsonTrees];
