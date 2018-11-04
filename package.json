@@ -1,7 +1,7 @@
 {
   "name": "guidemaker",
   "version": "0.2.2",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Guidemaker Core Engine",
   "keywords": [
     "ember-addon",
     "prember-plugin"
