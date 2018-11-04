@@ -1,4 +1,10 @@
 
+0.3.0 / 2018-11-04
+==================
+
+  * Adding configuration options and config service #2 from @mansona
+  * Updating using ember-cli-update
+
 0.2.0 / 2018-11-02
 ==================
 
