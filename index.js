@@ -21,7 +21,7 @@ const VersionsSerializer = new Serializer('version', {
 });
 
 module.exports = {
-  name: 'guidemaker',
+  name: require('./package').name,
   urlsForPrember() {
     const guidesSrcPkg = this.getGuidesSrcPkg();
     let urls = []
@@ -154,6 +154,31 @@ module.exports = {
       fastboot,
       // TODO: investigate this bug - remove it and see why it breaks
       'ember-collapsible-panel': config['ember-collapsible-panel'] || {}
+    }
+  },
+
+  included(app) {
+    this._super.included.apply(this, arguments)
+
+    if(!app.options['ember-prism']) {
+      app.options['ember-prism'] = {
+        theme: 'okaidia',
+
+        components: [
+          'apacheconf',
+          'bash',
+          'css',
+          'handlebars',
+          'http',
+          'javascript',
+          'json',
+          'markup-templating',
+          'ruby',
+          'scss'
+        ],
+
+        plugins: ['line-numbers', 'normalize-whitespace']
+      }
     }
   },
 };

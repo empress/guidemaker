@@ -115,6 +115,19 @@ module.exports = {
               )
               env.init.properties.push(emberMeta);
             }
+
+            let guidemaker = env.init.properties.find(property => property.key.value === 'guidemaker');
+
+            if(!guidemaker) {
+              guidemaker = builders.property(
+                'init',
+                builders.identifier('guidemaker'),
+                builders.objectExpression([
+                  builders.property('init', builders.identifier('title'), builders.literal('Guidemaker Docs'))
+                ])
+              )
+              env.init.properties.push(guidemaker);
+            }
           }
 
           this.traverse(path);
