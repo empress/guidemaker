@@ -40,10 +40,35 @@ This will generate a fully static output of your site in the dist folder.
 
 If you want to see the system running on your local machine just run `npm start` and you will be able to navigate to http://localhost:4200 to see the documentation site in action.
 
-Usage
+Configuration
 ------------------------------------------------------------------------------
 
-[TODO: fill in this section]
+After you install Guidemaker using the instructions above, you will see that your `config/environment.js` file will have been edited to add a `guidemaker` config object. You should update this with the details relevant to your documentation.
+
+Here is an example config with comments to explain the use of each of the attributes:
+
+```javascript
+guidemaker: {
+  // This title will be used in place of a logo if you do not provide one
+  title: 'Guidemaker docs',
+  // This logo will be used in the top left of the page - you can add it to your public folder
+  logo: '/images/logo.svg',
+  // this will be used for the copyright line in the bottom left of the page - if not provided then
+  // it will use `title` instead
+  copyright: 'Stone Circle Design Limited',
+  // show social links
+  social: {
+    // provide the slug for the github link (can be a project or an org)
+    github: 'empress/guidemaker',
+    // provide your username
+    twitter: 'real_ate',
+    // provide your invite link for your public discord
+    // discordLink: '<insert link here>'
+  },
+  // this should be the link to your documentation source - if you provide one it will add an edit button on each page
+  // sourceRepo: 'https://github.com/authmaker/documentation',
+}
+```
 
 
 Contributing
