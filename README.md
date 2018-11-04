@@ -25,7 +25,7 @@ ember new super-docs
 cd super-docs
 
 # you can replace the template with the one you want to use
-ember install guidemaker guidemaker-template
+ember install guidemaker guidemaker-default-template
 ```
 
 It will ask you if you want to update the index.html file and you should say yes 👍
