@@ -21,7 +21,7 @@ const VersionsSerializer = new Serializer('version', {
 });
 
 module.exports = {
-  name: 'guidemaker',
+  name: require('./package').name,
   urlsForPrember() {
     const guidesSrcPkg = this.getGuidesSrcPkg();
     let urls = []
