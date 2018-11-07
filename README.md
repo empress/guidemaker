@@ -55,7 +55,7 @@ guidemaker: {
   logo: '/images/logo.svg',
   // this will be used for the copyright line in the bottom left of the page - if not provided then
   // it will use `title` instead
-  copyright: 'Stone Circle Design Limited',
+  copyright: 'My Awesome Company',
   // show social links
   social: {
     // provide the slug for the github link (can be a project or an org)
