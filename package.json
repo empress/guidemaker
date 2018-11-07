@@ -28,6 +28,7 @@
     "broccoli-static-site-json": "^2.1.2",
     "ember-cli-babel": "^6.16.0",
     "ember-get-config": "^0.2.4",
+    "ember-meta": "^0.4.2",
     "js-yaml": "^3.12.0",
     "jsonapi-serializer": "^3.5.6",
     "recast": "^0.15.3",
