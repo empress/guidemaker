@@ -1,4 +1,9 @@
 
+0.4.1 / 2018-11-07
+==================
+
+  * adding index.html override to the default template to fix meta-data @mansona
+
 0.4.0 / 2018-11-04
 ==================
 
