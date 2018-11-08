@@ -1,4 +1,10 @@
 
+0.6.1 / 2018-11-08
+==================
+
+  * fix issue when deploying to S3
+  * fixing showdown-section-groups initializer
+
 0.6.0 / 2018-11-08
 ==================
 
