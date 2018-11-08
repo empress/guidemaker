@@ -26,6 +26,7 @@
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^3.0.0",
     "broccoli-static-site-json": "^2.1.2",
+    "ember-auto-import": "^1.2.15",
     "ember-body-class": "^1.1.0",
     "ember-cli-babel": "^6.16.0",
     "ember-cli-showdown": "^4.4.4",
