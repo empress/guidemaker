@@ -4,7 +4,7 @@ import { get } from '@ember/object';
 export default Route.extend({
   model() {
     return this.store.findRecord('version', 'versions').then(null, (err) => {
-      if(get(err, 'errors.0.status') === '404') {
+      if(['404', '403'].includes(get(err, 'errors.0.status'))) {
         return {
           currentVersion: 'release',
         }
