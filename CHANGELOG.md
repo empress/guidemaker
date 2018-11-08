@@ -1,13 +1,18 @@
 
+0.6.0 / 2018-11-08
+==================
+
+  * moving controllers, helpers, initializers, models, and routes to core from @mansona
+
 0.5.0 / 2018-11-07
 ==================
 
-  * Moving ember-meta implementation into guidemaker core @mansona
+  * Moving ember-meta implementation into guidemaker core from @mansona
 
 0.4.1 / 2018-11-07
 ==================
 
-  * adding index.html override to the default template to fix meta-data @mansona
+  * adding index.html override to the default template to fix meta-data from @mansona
 
 0.4.0 / 2018-11-04
 ==================
