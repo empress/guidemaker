@@ -13,11 +13,16 @@ module.exports = {
   },
 
   afterInstall() {
-    return this.addAddonsToProject({
-      packages: [
-        'prember',
-        'ember-cli-fastboot'
-      ]
+    return this.addPackagesToProject([
+      { name: 'guidemaker-link-checker' },
+      { name: 'guidemaker-toc-checker' },
+    ]).then(() => {
+      return this.addAddonsToProject({
+        packages: [
+          'prember',
+          'ember-cli-fastboot'
+        ]
+      })
     }).then(() => {
       const code = readFileSync('./ember-cli-build.js');
       const ast = recast.parse(code);
@@ -135,6 +140,15 @@ module.exports = {
       });
 
       writeFileSync('./config/environment.js', recast.print(configAst, { tabWidth: 2, quote: 'single' }).code);
+
+      const package = JSON.parse(readFileSync('./package.json'));
+      package.scripts = Object.assign(package.scripts, {
+        "test": "npm run test:node && npm run test:ember",
+        "test:ember": "ember test",
+        "test:node": "mocha node-tests"
+      });
+
+      writeFileSync('./package.json', JSON.stringify(package, null, 2) + '\n');
     });
   },
 
