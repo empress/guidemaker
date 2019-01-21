@@ -1,4 +1,10 @@
 
+0.7.1 / 2019-01-21
+==================
+
+  * adding compare-versions as a dependency
+  * adding link-checker, toc-checker, and mocha to default blueprint
+
 0.6.1 / 2018-11-08
 ==================
 
