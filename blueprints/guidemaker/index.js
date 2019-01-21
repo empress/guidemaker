@@ -16,6 +16,7 @@ module.exports = {
     return this.addPackagesToProject([
       { name: 'guidemaker-link-checker' },
       { name: 'guidemaker-toc-checker' },
+      { name: 'mocha' },
     ]).then(() => {
       return this.addAddonsToProject({
         packages: [
