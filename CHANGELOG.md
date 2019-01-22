@@ -1,9 +1,10 @@
 
-0.7.1 / 2019-01-21
+0.7.1 / 2019-01-22
 ==================
 
   * adding compare-versions as a dependency
   * adding link-checker, toc-checker, and mocha to default blueprint
+  * fixing page title update on navigation from @cah-danmonroe
 
 0.6.1 / 2018-11-08
 ==================
