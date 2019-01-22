@@ -12,7 +12,7 @@ export default HeadData.extend({
     return getOwner(this).lookup(`route:${this.routeName}`).get('currentModel.content');
   }),
 
-  title: computed('routeName', function() {
+  title: computed('routeName', 'page.{currentPage,currentSection}', function() {
     if(!this.page.currentPage || !this.page.currentSection) {
       return this.guidemaker.title;
     }
