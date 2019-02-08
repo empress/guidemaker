@@ -25,7 +25,7 @@ module.exports = {
   urlsForPrember() {
     const guidesSrcPkg = this.getGuidesSrcPkg();
     let urls = []
-    if(!existsSync(`${guidesSrcPkg}/versions.yml`)) {
+    if (!existsSync(`${guidesSrcPkg}/versions.yml`)) {
       const paths = walkSync(`${guidesSrcPkg}/guides`);
 
       const mdFiles = paths.
@@ -62,40 +62,41 @@ module.exports = {
     return urls;
   },
 
-  getGuidesSrcPkg() {
-    if(this.app.options.guidemaker && this.app.options.guidemaker.source) {
+  getGuidesSrcPkg(appPrefix) {
+    if (this.app.options.guidemaker && this.app.options.guidemaker.source) {
       try {
-        return resolve.sync(this.app.options.guidemaker.source, { basedir: process.cwd() });
+        return resolve.sync(this.app.options.guidemaker.source, { basedir: appPrefix });
       } catch (e) {
         // try getting nodemodeules directly
-        let fullPath = join(process.cwd(), 'node_modules', this.app.options.guidemaker.source);
-        if(existsSync(fullPath)) {
+        let fullPath = join(appPrefix, 'node_modules', this.app.options.guidemaker.source);
+        if (existsSync(fullPath)) {
           return fullPath;
         }
       }
 
-    } else if(existsSync(join(process.cwd(), 'guides'))) {
-      return process.cwd();
+    } else if (existsSync(join(appPrefix, 'guides'))) {
+      return appPrefix;
     }
   },
 
   treeForPublic() {
-    let guidesSrcPkg = this.getGuidesSrcPkg();
+    let appPrefix = join(this.project.configPath(), '../..');
+    let guidesSrcPkg = this.getGuidesSrcPkg(appPrefix);
     let broccoliTrees = [];
 
     // if there is an external guides source
-    if(guidesSrcPkg !== process.cwd()) {
-      if(existsSync(`${guidesSrcPkg}/public`)) {
+    if (guidesSrcPkg !== appPrefix) {
+      if (existsSync(`${guidesSrcPkg}/public`)) {
         broccoliTrees.push(new Funnel(`${guidesSrcPkg}/public`))
       }
     }
 
-    if(!guidesSrcPkg) {
+    if (!guidesSrcPkg) {
       throw new Error('You must either define "source" in your ember-cli-build or have a `guides` directory in your project.')
     }
 
     // the source package does not support versions
-    if(!existsSync(`${guidesSrcPkg}/versions.yml`)) {
+    if (!existsSync(`${guidesSrcPkg}/versions.yml`)) {
       broccoliTrees.push(new StaticSiteJson(`${guidesSrcPkg}/guides`, {
         contentFolder: `content/release`,
         contentTypes: ['content', 'description'],
@@ -144,7 +145,7 @@ module.exports = {
   config(env, config) {
     let fastboot = config.fastboot || {};
 
-    if(fastboot.hostWhitelist) {
+    if (fastboot.hostWhitelist) {
       fastboot.hostWhitelist.push(/localhost:\d+/);
     } else {
       fastboot.hostWhitelist = [/localhost:\d+/];
@@ -160,7 +161,7 @@ module.exports = {
   included(app) {
     this._super.included.apply(this, arguments)
 
-    if(!app.options['ember-prism']) {
+    if (!app.options['ember-prism']) {
       app.options['ember-prism'] = {
         theme: 'okaidia',
 
