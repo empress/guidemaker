@@ -1,4 +1,9 @@
 
+1.0.2 / 2019-02-08
+==================
+
+  * add release folder as numeric version to premberUrls #8 from @mansona
+
 1.0.1 / 2019-02-08
 ==================
 
