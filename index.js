@@ -62,7 +62,8 @@ module.exports = {
     return urls;
   },
 
-  getGuidesSrcPkg(appPrefix) {
+  getGuidesSrcPkg() {
+    let appPrefix = join(this.project.configPath(), '../..');
     if(this.app.options.guidemaker && this.app.options.guidemaker.source) {
       try {
         return resolve.sync(this.app.options.guidemaker.source, { basedir: process.cwd() });
@@ -80,8 +81,7 @@ module.exports = {
   },
 
   treeForPublic() {
-    let appPrefix = join(this.project.configPath(), '../..');
-    let guidesSrcPkg = this.getGuidesSrcPkg(appPrefix);
+    let guidesSrcPkg = this.getGuidesSrcPkg();
     let broccoliTrees = [];
 
     // if there is an external guides source
