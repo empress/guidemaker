@@ -8,17 +8,17 @@ export default Route.extend({
   model(params) {
     let applicationModel = this.modelFor('application');
     let currentVersion = get(applicationModel, 'currentVersion');
-    let version = params.version;
+    let queryVersion = params.version;
 
     if (params.version === 'release') {
-      version = currentVersion;
+      queryVersion = currentVersion;
     }
 
     return hash({
-      pages: this.store.query('page', { version }),
+      pages: this.store.query('page', { version: queryVersion }),
       allVersions: get(applicationModel, 'allVersions'),
       currentVersion,
-      version: version,
+      version: queryVersion,
     });
   },
 
