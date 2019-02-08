@@ -1,4 +1,10 @@
 
+1.0.0 / 2019-02-08
+==================
+
+  * Make it so that the currentVersion of the guides are in a `release` #6 from @locks
+  * Making it possible to develop guidemaker locally (with dummy app) #5 from @mansona
+
 0.7.1 / 2019-01-22
 ==================
 
