@@ -62,7 +62,7 @@ module.exports = {
     return urls;
   },
 
-  getGuidesSrcPkg() {
+  getGuidesSrcPkg(appPrefix) {
     if(this.app.options.guidemaker && this.app.options.guidemaker.source) {
       try {
         return resolve.sync(this.app.options.guidemaker.source, { basedir: process.cwd() });
@@ -74,13 +74,14 @@ module.exports = {
         }
       }
 
-    } else if(existsSync(join(process.cwd(), 'guides'))) {
-      return process.cwd();
+    } else if(existsSync(join(appPrefix, 'guides'))) {
+      return appPrefix;
     }
   },
 
   treeForPublic() {
-    let guidesSrcPkg = this.getGuidesSrcPkg();
+    let appPrefix = join(this.project.configPath(), '../..');
+    let guidesSrcPkg = this.getGuidesSrcPkg(appPrefix);
     let broccoliTrees = [];
 
     // if there is an external guides source
