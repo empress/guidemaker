@@ -57,6 +57,17 @@ module.exports = {
           urls.push(`/${premberVersion}/${file}`)
         })
       });
+
+      const paths = walkSync(`${guidesSrcPkg}/guides/release`);
+
+      const mdFiles = paths.
+        filter(path => extname(path) === '.md')
+        .map(path => path.replace(/\.md/, ''))
+        .map(path => path.replace(/\/index$/, ''));
+
+      mdFiles.forEach((file) => {
+        urls.push(`/${versions.currentVersion}/${file}`)
+      });
     }
 
     return urls;
