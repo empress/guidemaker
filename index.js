@@ -45,7 +45,7 @@ module.exports = {
       urls = [...urls, ...premberVersions.map(version => `/${version}`)];
 
       premberVersions.forEach((premberVersion) => {
-        const filesVersion = ['current', 'release'].includes(premberVersion) ? versions.currentVersion : premberVersion;
+        const filesVersion = premberVersion === versions.currentVersion ? 'release' : premberVersion;
         const paths = walkSync(`${guidesSrcPkg}/guides/${filesVersion}`);
 
         const mdFiles = paths.
@@ -67,7 +67,7 @@ module.exports = {
       try {
         return resolve.sync(this.app.options.guidemaker.source, { basedir: process.cwd() });
       } catch (e) {
-        // try getting nodemodeules directly
+        // try getting node_modules directly
         let fullPath = join(process.cwd(), 'node_modules', this.app.options.guidemaker.source);
         if(existsSync(fullPath)) {
           return fullPath;
@@ -105,26 +105,19 @@ module.exports = {
     } else {
       const versions = yaml.safeLoad(readFileSync(`${guidesSrcPkg}/versions.yml`, 'utf8'));
 
-      let premberVersions = [...versions.allVersions, 'release'];
-      const urls = premberVersions.map(version => `/${version}`);
+      const jsonTrees = versions.allVersions.map((listedVersion) => {
+        let version = listedVersion === versions.currentVersion ? 'release' : listedVersion;
 
-
-      premberVersions.forEach((premberVersion) => {
-        const filesVersion = ['current', 'release'].includes(premberVersion) ? versions.currentVersion : premberVersion;
-        const paths = walkSync(`${guidesSrcPkg}/guides/${filesVersion}`);
-
-        const mdFiles = paths.
-          filter(path => extname(path) === '.md')
-          .map(path => path.replace(/\.md/, ''))
-          .map(path => path.replace(/\/index$/, ''));
-
-        mdFiles.forEach((file) => {
-          urls.push(`/${premberVersion}/${file}`)
+        return new StaticSiteJson(`${guidesSrcPkg}/guides/${version}`, {
+          contentFolder: `content/${version}`,
+          contentTypes: ['content', 'description'],
+          type: 'contents',
+          attributes: ['canonical', 'redirect'],
         })
       });
 
-      const jsonTrees = versions.allVersions.map((version) => new StaticSiteJson(`${guidesSrcPkg}/guides/${version}`, {
-        contentFolder: `content/${version}`,
+      jsonTrees.push(new StaticSiteJson(`${guidesSrcPkg}/guides/release`, {
+        contentFolder: `content/${versions.currentVersion}`,
         contentTypes: ['content', 'description'],
         type: 'contents',
         attributes: ['canonical', 'redirect'],
