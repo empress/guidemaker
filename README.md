@@ -6,7 +6,7 @@ This project is designed to be a fully-functional, static site implementation of
 This system is designed to have a core functionality provided by this repository/package and seperate packages that provide the themes and styling to your Documentation site.
 
 - [Guidemaker Default Template](https://github.com/empress/guidemaker-default-template) is a basic theme that is intended to provide a default style for new projects.
-- [Guidemaker Ember Teamplate](https://github.com/ember-learn/guidemaker-ember-template) is the official theme used for all Ember Learning Core Team projects
+- [Guidemaker Ember Template](https://github.com/ember-learn/guidemaker-ember-template) is the official theme used for all Ember Learning Core Team projects
 
 If you are interested in writing your own theme for Guidemaker please reach out to us and we can walk you through the process. Hopefully if there is enough interest we can provide basic instructions on how to build your own theme using this system.
 
