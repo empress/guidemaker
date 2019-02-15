@@ -3,6 +3,10 @@ import { inject as service } from '@ember/service';
 import { get, set } from '@ember/object';
 import { hash } from 'rsvp';
 
+function isExternalRedirect(redirect) {
+  return redirect.match(/^https?:\/\//);
+}
+
 export default Route.extend({
   page: service(),
   model(params) {
@@ -26,15 +30,15 @@ export default Route.extend({
       path,
       version
     })
-    .catch((e) => {
-      if (['404', '403'].includes(get(e, 'errors.0.status'))) {
-        return this.store.queryRecord('content', {
-          path: `${path}/index`,
-          version
-        });
-      }
-      throw e;
-    });
+      .catch((e) => {
+        if (['404', '403'].includes(get(e, 'errors.0.status'))) {
+          return this.store.queryRecord('content', {
+            path: `${path}/index`,
+            version
+          });
+        }
+        throw e;
+      });
 
     return hash({
       content: contentPromise,
@@ -45,8 +49,14 @@ export default Route.extend({
     })
   },
   afterModel(model) {
-    if(model.content.redirect) {
-      this.transitionTo('version.show', model.content.redirect)
+    let redirect = model.content.redirect;
+
+    if (redirect) {
+      if (isExternalRedirect(redirect)) {
+        window.location.replace(redirect);
+      } else {
+        this.transitionTo('version.show', redirect)
+      }
     }
 
     let content = get(model, 'content');
