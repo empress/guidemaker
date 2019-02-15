@@ -1,4 +1,10 @@
 
+1.1.0 / 2019-02-15
+==================
+
+  * Test internal redirects and implement external redirects #11 from @locks
+  * Fixing typo #10 from @MelSumner
+
 1.0.2 / 2019-02-08
 ==================
 
