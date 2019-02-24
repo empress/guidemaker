@@ -1,4 +1,9 @@
 
+1.2.0 / 2019-02-24
+==================
+
+  * exposing a percy-tests helper to make it easy to test each guide in latest version #12 from @mansona
+
 1.1.0 / 2019-02-15
 ==================
 
