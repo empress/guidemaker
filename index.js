@@ -17,6 +17,7 @@ const VersionsSerializer = new Serializer('version', {
   attributes: [
     'allVersions',
     'currentVersion',
+    'ltsVersions'
   ],
 });
 
