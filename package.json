@@ -6,7 +6,7 @@
     "ember-addon",
     "prember-plugin"
   ],
-  "repository": "",
+  "repository": "https://github.com/empress/guidemaker",
   "license": "MIT",
   "author": "",
   "directories": {
