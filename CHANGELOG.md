@@ -1,4 +1,10 @@
 
+1.3.0 / 2019-03-11
+==================
+
+  * add ltsVersions attribute to version model #13 from @locks
+  * Add repository link #14 from @jrjohnson
+
 1.2.0 / 2019-02-24
 ==================
 
