@@ -1,4 +1,9 @@
 
+1.4.0 / 2019-04-09
+==================
+
+  * implementing netlifyRedirects() to automatically add netlify redirects from guidemaker redirects #16 from @mansona
+
 1.3.0 / 2019-03-11
 ==================
 
