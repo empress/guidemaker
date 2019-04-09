@@ -7,6 +7,7 @@ const walkSync = require('walk-sync');
 const writeFile = require('broccoli-file-creator');
 const yaml = require('js-yaml');
 const resolve = require('resolve');
+const yamlFront = require('yaml-front-matter');
 
 const { readFileSync, existsSync } = require('fs');
 const { join } = require('path');
@@ -72,6 +73,70 @@ module.exports = {
     }
 
     return urls;
+  },
+
+  netlifyRedirects() {
+    const redirects = [
+      '/          /release/',
+      '/current/* /release/:splat',
+    ];
+
+    const guidesSrcPkg = this.getGuidesSrcPkg();
+    const paths = walkSync(`${guidesSrcPkg}/guides`)
+      .filter(path => extname(path) === '.md')
+      .map(path => ({
+        path: path.replace(/\/index.md$/, ''),
+        content: readFileSync(join(guidesSrcPkg, 'guides', path)),
+      }));
+
+    if(!existsSync(`${guidesSrcPkg}/versions.yml`)) {
+      paths.forEach((file) => {
+          const front = yamlFront.loadFront(file.content);
+
+          if (front.redirect) {
+            let redirect;
+
+            if(front.redirect.match(/^https?:\/\//)) {
+              redirect = front.redirect;
+            } else if (front.redirect.endsWith('/index')) {
+              redirect = `/release/${front.redirect.replace(/\/index$/, '')}`;
+            } else {
+              redirect = `/release/${front.redirect}`;
+            }
+
+            redirects.push(`/release/${file.path.replace(/\.md$/, '')} ${redirect}`)
+          }
+        })
+    } else {
+      const versionsConfig = yaml.safeLoad(readFileSync(`${guidesSrcPkg}/versions.yml`, 'utf8'));
+
+      paths.forEach((file) => {
+          const front = yamlFront.loadFront(file.content);
+
+          if (front.redirect) {
+            let redirect;
+
+            if(front.redirect.match(/^https?:\/\//)) {
+              redirect = front.redirect;
+            } else if (front.redirect.endsWith('/index')) {
+              redirect = `/${front.redirect.replace(/\/index$/, '')}`;
+            } else {
+              redirect = `/${front.redirect}`;
+            }
+
+            redirects.push(`/${file.path.replace(/\.md$/, '')} ${redirect}`)
+
+            // also add current version number redirect
+            if(file.path.startsWith('release/')) {
+              redirects.push(`/${file.path.replace(/\.md$/, '').replace(/^release\//, `${versionsConfig.currentVersion}/`)} ${redirect}`)
+            }
+
+          }
+        })
+    }
+
+
+    return redirects;
   },
 
   getGuidesSrcPkg() {

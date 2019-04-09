@@ -4,6 +4,7 @@
   "description": "Guidemaker Core Engine",
   "keywords": [
     "ember-addon",
+    "ember-cli-netlify-plugin",
     "prember-plugin"
   ],
   "repository": "https://github.com/empress/guidemaker",
@@ -38,7 +39,8 @@
     "recast": "^0.15.3",
     "resolve": "^1.8.1",
     "showdown-section-groups": "^0.3.0",
-    "walk-sync": "^0.3.2"
+    "walk-sync": "^0.3.2",
+    "yaml-front-matter": "^4.0.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
