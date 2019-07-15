@@ -14,6 +14,13 @@ If you want an example of the this "in production" then check out the [Ember Gui
 
 You do not need to be a web developer to be able to use this system. You just write markdown files and the rest of the work is performed by the EmberJS build system.
 
+Compatibility
+------------------------------------------------------------------------------
+
+* Ember.js v2.18 or above
+* Ember CLI v2.13 or above
+* Node.js v8 or above
+
 Super Quick Start
 ------------------------------------------------------------------------------
 If you want to start writing your documentation right away and want to deploy your new Guidemaker documentation site on [Netlify](https://www.netlify.com/) in less than a minute then you can just click this button:
@@ -87,30 +94,8 @@ guidemaker: {
 Contributing
 ------------------------------------------------------------------------------
 
-### Installation
+See the [Contributing](CONTRIBUTING.md) guide for details.
 
-* `git clone <repository-url>`
-* `cd guidemaker`
-* `npm install`
-
-### Linting
-
-* `npm run lint:hbs`
-* `npm run lint:js`
-* `npm run lint:js -- --fix`
-
-### Running tests
-
-* `ember test` – Runs the test suite on the current Ember version
-* `ember test --server` – Runs the test suite in "watch mode"
-* `ember try:each` – Runs the test suite against multiple Ember versions
-
-### Running the dummy application
-
-* `ember serve`
-* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
-
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
 License
 ------------------------------------------------------------------------------
