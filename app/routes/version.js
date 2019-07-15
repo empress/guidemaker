@@ -15,7 +15,11 @@ export default Route.extend({
     }
 
     return hash({
-      pages: this.store.query('page', { version: queryVersion }),
+      pages: this.store.findAll('page', {
+        adapterOptions: {
+          version: queryVersion
+        }
+      }),
       allVersions: get(applicationModel, 'allVersions'),
       currentVersion,
       version: queryVersion,

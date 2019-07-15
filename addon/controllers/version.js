@@ -26,7 +26,11 @@ export default Controller.extend({
     selectVersion(version) {
       // Navigate to same section/page if it exists
       const path = get(this, 'page.currentPage.url');
-      this.store.queryRecord('content', {version, path}).then(() => {
+      this.store.findRecord('content', path, {
+        adapterOptions: {
+          version,
+        }
+      }).then(() => {
         this.transitionToRoute(`/${version}/${path}`);
       }).catch(() => {
         this.transitionToRoute('version', version);
