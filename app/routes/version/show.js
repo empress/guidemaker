@@ -51,7 +51,7 @@ export default Route.extend({
     })
   },
   afterModel(model) {
-    let redirect = model.content.redirect;
+    let redirect = get(model.content, 'redirect');
 
     if (redirect) {
       if (isExternalRedirect(redirect)) {
