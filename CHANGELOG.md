@@ -1,4 +1,11 @@
 
+1.5.0 / 2019-07-22
+==================
+
+  * move all queryRecord and query to findRecord() and findAll() #18 from @mansona
+
+Note: Travis tests are now in Node 8 which does **not** need a major version bump. Guidemaker never supported Node 6
+
 1.4.0 / 2019-04-09
 ==================
 
