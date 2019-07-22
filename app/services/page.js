@@ -42,7 +42,7 @@ export default Service.extend({
       return get(currentSection, 'pages')[0];
     }
 
-    let pages = get(currentSection, 'pages');
+    let pages = get(currentSection, 'pages') || [];
 
     let currentPage = pages.find((page) => page.url === get(this, 'content.id'));
 

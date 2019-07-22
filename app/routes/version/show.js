@@ -26,16 +26,18 @@ export default Route.extend({
       pages,
     } = this.modelFor('version');
 
-    let contentPromise = this.store.queryRecord('content', {
-      path,
-      version
+    let contentPromise = this.store.findRecord('content', path, {
+      adapterOptions: {
+        version,
+      }
     })
       .catch((e) => {
         if (['404', '403'].includes(get(e, 'errors.0.status'))) {
-          return this.store.queryRecord('content', {
-            path: `${path}/index`,
-            version
-          });
+          return this.store.findRecord('content', `${path}/index`, {
+            adapterOptions: {
+              version,
+            }
+          })
         }
         throw e;
       });
@@ -49,7 +51,7 @@ export default Route.extend({
     })
   },
   afterModel(model) {
-    let redirect = model.content.redirect;
+    let redirect = get(model.content, 'redirect');
 
     if (redirect) {
       if (isExternalRedirect(redirect)) {
