@@ -1,4 +1,9 @@
 
+1.5.1 / 2019-07-22
+==================
+
+  * force a reload when changing versions from @mansona
+
 1.5.0 / 2019-07-22
 ==================
 
