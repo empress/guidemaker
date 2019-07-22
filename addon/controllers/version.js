@@ -29,7 +29,8 @@ export default Controller.extend({
       this.store.findRecord('content', path, {
         adapterOptions: {
           version,
-        }
+        },
+        reload: true,
       }).then(() => {
         this.transitionToRoute(`/${version}/${path}`);
       }).catch(() => {
