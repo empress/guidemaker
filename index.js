@@ -138,20 +138,23 @@ You should move it into the 'guides' folder.
           const front = yamlFront.loadFront(file.content);
 
           if (front.redirect) {
+            let pathMatch = file.path.match(/^([^/]*)/);
+            let version = pathMatch[1];
+
             let redirect;
 
             if(front.redirect.match(/^https?:\/\//)) {
               redirect = front.redirect;
             } else if (front.redirect.endsWith('/index')) {
-              redirect = `/${front.redirect.replace(/\/index$/, '')}`;
+              redirect = `/${version}/${front.redirect.replace(/\/index$/, '')}`;
             } else {
-              redirect = `/${front.redirect}`;
+              redirect = `/${version}/${front.redirect}`;
             }
 
             redirects.push(`/${file.path.replace(/\.md$/, '')} ${redirect}`)
 
             // also add current version number redirect
-            if(file.path.startsWith('release/')) {
+            if(version === 'release') {
               redirects.push(`/${file.path.replace(/\.md$/, '').replace(/^release\//, `${versions.currentVersion}/`)} ${redirect}`)
             }
 
