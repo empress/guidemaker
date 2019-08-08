@@ -47,6 +47,24 @@ module.exports = {
       rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
         // add your custom rules and overrides for node files here
       })
+    },
+    // node tests
+    {
+      files: [
+        'node-tests/**/*.js'
+      ],
+      env: {
+        node: true,
+        mocha: true
+      },
+      parserOptions: {
+        ecmaVersion: 2018
+      },
+      rules: {
+        "func-names": 0,
+        "prefer-arrow-callback": 0,
+        "no-unused-expressions": 0
+      },
     }
   ]
 };

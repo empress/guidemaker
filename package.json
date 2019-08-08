@@ -19,7 +19,9 @@
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
-    "test": "ember test",
+    "test": "npm run test:node && npm run test:ember",
+    "test:ember": "ember test",
+    "test:node": "mocha node-tests",
     "test:all": "ember try:each"
   },
   "dependencies": {
@@ -45,6 +47,7 @@
   "devDependencies": {
     "@ember/optional-features": "^0.7.0",
     "broccoli-asset-rev": "^3.0.0",
+    "chai": "^4.2.0",
     "ember-cli": "~3.10.1",
     "ember-cli-dependency-checker": "^3.1.0",
     "ember-cli-eslint": "^5.1.0",
@@ -70,6 +73,7 @@
     "eslint-plugin-node": "^9.0.1",
     "guidemaker-default-template": "^1.1.0",
     "loader.js": "^4.7.0",
+    "mocha": "^6.2.0",
     "qunit-dom": "^0.8.4"
   },
   "engines": {
