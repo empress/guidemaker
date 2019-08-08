@@ -74,6 +74,7 @@
     "guidemaker-default-template": "^1.1.1",
     "loader.js": "^4.7.0",
     "mocha": "^6.2.0",
+    "prember": "^1.0.3",
     "qunit-dom": "^0.8.4"
   },
   "engines": {
