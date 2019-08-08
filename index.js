@@ -152,7 +152,7 @@ You should move it into the 'guides' folder.
 
             // also add current version number redirect
             if(file.path.startsWith('release/')) {
-              redirects.push(`/${file.path.replace(/\.md$/, '').replace(/^release\//, `${versionsConfig.currentVersion}/`)} ${redirect}`)
+              redirects.push(`/${file.path.replace(/\.md$/, '').replace(/^release\//, `${versions.currentVersion}/`)} ${redirect}`)
             }
 
           }
