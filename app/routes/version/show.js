@@ -55,7 +55,10 @@ export default Route.extend({
 
     if (redirect) {
       if (isExternalRedirect(redirect)) {
-        window.location.replace(redirect);
+        // i.e. don't do in fastboot or prember
+        if (window.location) {
+          window.location.replace(redirect);
+        }
       } else {
         this.transitionTo('version.show', redirect)
       }

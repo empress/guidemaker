@@ -27,7 +27,10 @@ module.exports = {
   urlsForPrember() {
     const guidesSrcPkg = this.getGuidesSrcPkg();
     let urls = []
-    if(!existsSync(`${guidesSrcPkg}/versions.yml`)) {
+
+    const versions = this.getVersions();
+
+    if(!versions) {
       const paths = walkSync(`${guidesSrcPkg}/guides`);
 
       const mdFiles = paths.
@@ -41,8 +44,6 @@ module.exports = {
 
       urls.push('/release')
     } else {
-      const versions = yaml.safeLoad(readFileSync(`${guidesSrcPkg}/versions.yml`, 'utf8'));
-
       let premberVersions = [...versions.allVersions, 'release'];
       urls = [...urls, ...premberVersions.map(version => `/${version}`)];
 
@@ -75,6 +76,29 @@ module.exports = {
     return urls;
   },
 
+  getVersions() {
+    const guidesSrcPkg = this.getGuidesSrcPkg();
+
+    if(!existsSync(`${guidesSrcPkg}/versions.yml`) && !existsSync(`${guidesSrcPkg}/guides/versions.yml`)) {
+      return;
+    }
+
+    let versionsFile;
+
+    if (existsSync(`${guidesSrcPkg}/versions.yml`)) {
+      // eslint-disable-next-line no-console
+      console.warn(`Defining your 'versions.yml' file in the root folder is now deprecated.
+
+You should move it into the 'guides' folder.
+`);
+      versionsFile = `${guidesSrcPkg}/versions.yml`;
+    } else {
+      versionsFile = `${guidesSrcPkg}/guides/versions.yml`;
+    }
+
+    return yaml.safeLoad(readFileSync(versionsFile, 'utf8'));
+  },
+
   netlifyRedirects() {
     const redirects = [
       '/          /release/',
@@ -89,7 +113,9 @@ module.exports = {
         content: readFileSync(join(guidesSrcPkg, 'guides', path)),
       }));
 
-    if(!existsSync(`${guidesSrcPkg}/versions.yml`)) {
+    const versions = this.getVersions();
+
+    if(!versions) {
       paths.forEach((file) => {
           const front = yamlFront.loadFront(file.content);
 
@@ -108,27 +134,28 @@ module.exports = {
           }
         })
     } else {
-      const versionsConfig = yaml.safeLoad(readFileSync(`${guidesSrcPkg}/versions.yml`, 'utf8'));
-
       paths.forEach((file) => {
           const front = yamlFront.loadFront(file.content);
 
           if (front.redirect) {
+            let pathMatch = file.path.match(/^([^/]*)/);
+            let version = pathMatch[1];
+
             let redirect;
 
             if(front.redirect.match(/^https?:\/\//)) {
               redirect = front.redirect;
             } else if (front.redirect.endsWith('/index')) {
-              redirect = `/${front.redirect.replace(/\/index$/, '')}`;
+              redirect = `/${version}/${front.redirect.replace(/\/index$/, '')}`;
             } else {
-              redirect = `/${front.redirect}`;
+              redirect = `/${version}/${front.redirect}`;
             }
 
             redirects.push(`/${file.path.replace(/\.md$/, '')} ${redirect}`)
 
             // also add current version number redirect
-            if(file.path.startsWith('release/')) {
-              redirects.push(`/${file.path.replace(/\.md$/, '').replace(/^release\//, `${versionsConfig.currentVersion}/`)} ${redirect}`)
+            if(version === 'release') {
+              redirects.push(`/${file.path.replace(/\.md$/, '').replace(/^release\//, `${versions.currentVersion}/`)} ${redirect}`)
             }
 
           }
@@ -172,8 +199,10 @@ module.exports = {
       throw new Error('You must either define "source" in your ember-cli-build or have a `guides` directory in your project.')
     }
 
+    const versions = this.getVersions();
+
     // the source package does not support versions
-    if(!existsSync(`${guidesSrcPkg}/versions.yml`)) {
+    if(!versions) {
       broccoliTrees.push(new StaticSiteJson(`${guidesSrcPkg}/guides`, {
         contentFolder: `content/release`,
         contentTypes: ['content', 'description'],
@@ -181,8 +210,6 @@ module.exports = {
         attributes: ['canonical', 'redirect'],
       }))
     } else {
-      const versions = yaml.safeLoad(readFileSync(`${guidesSrcPkg}/versions.yml`, 'utf8'));
-
       const jsonTrees = versions.allVersions.map((listedVersion) => {
         let version = listedVersion === versions.currentVersion ? 'release' : listedVersion;
 
