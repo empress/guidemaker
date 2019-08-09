@@ -1,4 +1,14 @@
 
+1.6.0 / 2019-08-09
+==================
+
+  * fixing issue with external redirects in Prember #20 from @mansona
+  * adding prember for dummy app for netlify preview
+  * fixing redirects with versioned guides
+  * using versions for sample data
+  * move location of versions.yml and deprecate old location
+  * implementing node tests for redirects
+
 1.5.1 / 2019-07-22
 ==================
 
