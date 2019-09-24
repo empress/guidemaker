@@ -1,30 +1,122 @@
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
-import { get, set, computed } from '@ember/object';
+import { get, computed } from '@ember/object';
+import { assert } from '@ember/debug';
+
+/**
+ * Build up a tree of the pages that matches the URL structure:
+ *
+ * {
+ *   index: { page: Page, next: PageTreeNode }
+ *   'getting-started': {
+ *     first: PageTreeNode,
+ *     last: PageTreeNode,
+ *     parent: PageTreeNode,
+ *     'core-concepts': { page: Page, prev: PageTreeNode, next: PageTreeNode },
+ *     ...
+ *   }
+ * }
+ *
+ * TypeScript Type:
+ *
+ * interface Node {
+ *   page?: Page,
+ *   parent: Node,
+ * }
+ *
+ * interface SectionNode extends Node {
+ *   subNodes: Map<string, Node>,
+ *   first: PageNode,
+ *   last: PageNode,
+ * }
+ *
+ * interface PageNode extends Node {
+ *   prev: PageNode,
+ *   next: PageNode,
+ * }
+ */
+function buildPageTreeNode(pages, page, parent, depth = 0) {
+  let pageTreeNode = {
+    page,
+    parent,
+    subNodes: new Map(),
+  };
+
+  let subNodes = pages.map(page => {
+    if (page.id === 'index') {
+      // special case for index, which always has a single sub page
+      return { page: page.pages[0], parent: pageTreeNode };
+    } else if (page.pages === undefined) {
+      return { page, parent: pageTreeNode };
+    } else {
+      return buildPageTreeNode(page.pages, page, pageTreeNode, depth + 1);
+    }
+  });
+
+  subNodes.forEach((node, index) => {
+    if (index === 0) {
+      pageTreeNode.first = node.first || node;
+    }
+
+    if (index === subNodes.length - 1) {
+      pageTreeNode.last = node.last || node;
+    }
+
+    let nextNode = subNodes[index + 1];
+
+    if (nextNode) {
+      let prevPage = node.last || node;
+      let nextPage = nextNode.first || nextNode;
+
+      prevPage.next = nextPage;
+      nextPage.prev = prevPage;
+    }
+
+    let id = node.page.id || node.page.url.split('/')[depth];
+
+    assert(
+      `You can only have one page/section with a given title at any level in the guides, received duplicate: ${id}`,
+      !pageTreeNode.subNodes.has(id)
+    );
+
+    pageTreeNode.subNodes.set(id, node);
+  });
+
+  return pageTreeNode;
+}
 
 export default Service.extend({
   router: service(),
   fastboot: service(),
   headData: service(),
 
-  currentSection: computed('router.currentURL', 'pages.[]', 'content.id', function() {
-    let tocSections = this.pages;
+  pages: null,
 
+  pageTree: computed('pages', function() {
+    let { pages } = this;
+    return buildPageTreeNode(pages.toArray ? pages.toArray() : pages);
+  }),
+
+  currentNode: computed('content.id', function() {
     let contentId = get(this, 'content.id');
 
-    if(!tocSections || !contentId) { return; }
-
-    let section = contentId.split('/')[0]
-    let currentSection = tocSections.find((tocSection) => tocSection.id === section);
-
-    if(!currentSection) {
+    if (!contentId) {
       return;
     }
 
-    // eslint-disable-next-line ember/no-side-effects
-    set(this, 'metaSection', get(currentSection, 'title'));
+    let path = contentId.split('/');
 
-    return currentSection;
+    let current = get(this, 'pageTree');
+
+    for (let segment of path) {
+      current = current.subNodes.get(segment);
+    }
+
+    return current;
+  }),
+
+  currentSection: computed('currentNode', function() {
+    return get(this, 'currentNode.parent.page');
   }),
 
   /**
@@ -32,121 +124,37 @@ export default Service.extend({
    * from the TOC and not the content. Also we use this to compute nextPage and previousPage
    * @return {Promise} the current page as a POJO
    */
-  currentPage: computed('router.currentURL', 'currentSection.pages', 'content.id', function() {
-    let currentSection = this.currentSection;
-
-    if(!currentSection) { return; }
-
-    // special case for the index section - there should always be only exactly 1 page in the "index" section
-    if (currentSection.id === 'index') {
-      return get(currentSection, 'pages')[0];
-    }
-
-    let pages = get(currentSection, 'pages') || [];
-
-    let currentPage = pages.find((page) => page.url === get(this, 'content.id'));
-
-    if(!currentPage) {
-      return;
-    }
-
-    // eslint-disable-next-line ember/no-side-effects
-    set(this, 'metaPage', get(currentPage, 'title'));
-
-    return currentPage;
+  currentPage: computed('currentNode', function() {
+    return get(this, 'currentNode.page');
   }),
 
-  isFirstPage: computed('currentSection', 'currentPage', function() {
-    let currentSection = this.currentSection;
-
-    if(!currentSection) { return; }
-
-    let pages = get(currentSection, 'pages');
-    if(pages) {
-      return pages.indexOf(this.currentPage) === 0;
-    }
+  isFirstPage: computed('currentNode', function() {
+    return (
+      get(this, 'currentNode.page.url') === 'index' ||
+      get(this, 'currentNode') === get(this, 'currentNode.parent.first')
+    );
   }),
 
-  isLastPage: computed('currentSection', 'currentPage', function() {
-    let currentSection = this.currentSection;
-
-    if(!currentSection) { return; }
-
-    let pages = get(currentSection, 'pages');
-    if(pages) {
-      return pages.indexOf(this.currentPage) === (pages.length-1);
-    }
+  isLastPage: computed('currentNode', function() {
+    return (
+      get(this, 'currentNode.page.url') === 'index' ||
+      get(this, 'currentNode') === get(this, 'currentNode.parent.last')
+    );
   }),
 
-  previousPage: computed('currentSection.pages', 'currentPage.url', function() {
-    let currentSection = this.currentSection;
-    let currentPage = this.currentPage;
-
-    if(!currentSection || !currentPage) { return; }
-
-    let pages = get(currentSection, 'pages');
-
-    if(pages) {
-      let currentLocalPage = pages.find((page) => page.url === currentPage.url);
-      let index = pages.indexOf(currentLocalPage);
-
-      if (index > 0) {
-        return pages[index - 1];
-      }
-    }
+  previousPage: computed('currentNode', function() {
+    return get(this, 'currentNode.prev.page');
   }),
 
-  nextPage: computed('currentSection.pages', 'currentPage.url', function() {
-    let currentSection = this.currentSection;
-    let currentPage = this.currentPage;
-
-    if(!currentSection || !currentPage) { return; }
-
-    let pages = get(currentSection, 'pages');
-
-    if(pages) {
-      let currentLocalPage = pages.find((page) => page.url === currentPage.url);
-      let index = pages.indexOf(currentLocalPage);
-
-      if (index < pages.length-1) {
-        return pages[index + 1];
-      }
-    }
+  nextPage: computed('currentNode', function() {
+    return get(this, 'currentNode.next.page');
   }),
 
-  previousSection: computed('currentSection', 'pages.[]', function() {
-    let currentSection = this.currentSection;
-
-    if(!currentSection) { return; }
-
-    let pages = this.pages;
-
-    if (pages) {
-      let page = pages.content.find((content) => content.id === currentSection.id);
-
-      let index = pages.content.indexOf(page);
-
-      if (index > 0) {
-        return pages.objectAt(index-1);
-      }
-    }
+  previousSection: computed('currentNode', function() {
+    return get(this, 'currentNode.prev.parent.page');
   }),
 
-  nextSection: computed('currentSection', 'pages.[]', function() {
-    let currentSection = this.currentSection;
-
-    if(!currentSection) { return; }
-
-    let pages = this.pages;
-
-    if (pages) {
-      let page = pages.content.find((content) => content.id === currentSection.id);
-
-      let index = pages.content.indexOf(page);
-
-      if (index < get(pages, 'length') - 1) {
-        return pages.objectAt(index + 1);
-      }
-    }
+  nextSection: computed('currentNode', function() {
+    return get(this, 'currentNode.next.parent.page');
   }),
 });
