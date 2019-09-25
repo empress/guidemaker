@@ -42,16 +42,11 @@ function buildPageTreeNode(pages, page, parent, depth = 0) {
     subNodes: new Map(),
   };
 
-  let subNodes = pages.map(page => {
-    if (page.id === 'index') {
-      // special case for index, which always has a single sub page
-      return { page: page.pages[0], parent: pageTreeNode };
-    } else if (page.pages === undefined) {
-      return { page, parent: pageTreeNode };
-    } else {
-      return buildPageTreeNode(page.pages, page, pageTreeNode, depth + 1);
-    }
-  });
+  let subNodes = pages.map(page =>
+    page.pages
+      ? buildPageTreeNode(page.pages, page, pageTreeNode, depth + 1)
+      : { page, parent: pageTreeNode }
+  );
 
   subNodes.forEach((node, index) => {
     if (index === 0) {
@@ -72,14 +67,22 @@ function buildPageTreeNode(pages, page, parent, depth = 0) {
       nextPage.prev = prevPage;
     }
 
-    let id = node.page.id || node.page.url.split('/')[depth];
+    let url = node.page.id || node.page.url;
+    let lastSlash = url.lastIndexOf('/');
+    let segment = url.substr(lastSlash + 1);
 
     assert(
-      `You can only have one page/section with a given title at any level in the guides, received duplicate: ${id}`,
-      !pageTreeNode.subNodes.has(id)
+      `Received an invalid page url/id: ${url}, whose parent url was: ${page.id ||
+        page.url}. Page urls/ids must be equal to the page url/id of their parent page, plus an additional segment for the page itself. The only exception is the main 'index' page, which has a single subpage with whose url is the empty string, ''`,
+      url === '' || !page || url.substr(0, lastSlash) === (page.id || page.url)
     );
 
-    pageTreeNode.subNodes.set(id, node);
+    assert(
+      `You can only have one page/section with a given title at any level in the guides, received duplicate: ${segment}`,
+      !pageTreeNode.subNodes.has(segment)
+    );
+
+    pageTreeNode.subNodes.set(segment, node);
   });
 
   return pageTreeNode;
@@ -97,7 +100,7 @@ export default Service.extend({
     return buildPageTreeNode(pages.toArray ? pages.toArray() : pages);
   }),
 
-  currentNode: computed('content.id', function() {
+  _currentNode: computed('content.id', function() {
     let contentId = get(this, 'content.id');
 
     if (!contentId) {
@@ -112,11 +115,22 @@ export default Service.extend({
       current = current.subNodes.get(segment);
     }
 
+    if (get(current, 'page.id') === 'index') {
+      // special case for the index section - there should always be only
+      // exactly 1 page in the "index" section, and it should be the default
+      assert(
+        "The `index` section of the guides must contain exactly one subpage with `url: ''`",
+        current.subNodes.size === 1 && current.subNodes.has('')
+      );
+
+      return current.subNodes.get('');
+    }
+
     return current;
   }),
 
-  currentSection: computed('currentNode', function() {
-    return get(this, 'currentNode.parent.page');
+  currentSection: computed('_currentNode', function() {
+    return get(this, '_currentNode.parent.page');
   }),
 
   /**
@@ -124,37 +138,77 @@ export default Service.extend({
    * from the TOC and not the content. Also we use this to compute nextPage and previousPage
    * @return {Promise} the current page as a POJO
    */
-  currentPage: computed('currentNode', function() {
-    return get(this, 'currentNode.page');
+  currentPage: computed('_currentNode', function() {
+    return get(this, '_currentNode.page');
   }),
 
-  isFirstPage: computed('currentNode', function() {
+  isFirstPage: computed('_currentNode', function() {
+    return get(this, '_currentNode') === get(this, '_currentNode.parent.first');
+  }),
+
+  isLastPage: computed('_currentNode', function() {
+    return get(this, '_currentNode') === get(this, '_currentNode.parent.last');
+  }),
+
+  previousPage: computed('_currentNode', function() {
+    return get(this, '_currentNode.prev.page');
+  }),
+
+  previousIsFirstPage: computed('_currentNode', function() {
     return (
-      get(this, 'currentNode.page.url') === 'index' ||
-      get(this, 'currentNode') === get(this, 'currentNode.parent.first')
+      get(this, '_currentNode.prev') ===
+      get(this, '_currentNode.prev.parent.first')
     );
   }),
 
-  isLastPage: computed('currentNode', function() {
+  previousIsLastPage: computed('_currentNode', function() {
     return (
-      get(this, 'currentNode.page.url') === 'index' ||
-      get(this, 'currentNode') === get(this, 'currentNode.parent.last')
+      get(this, '_currentNode.prev') ===
+      get(this, '_currentNode.prev.parent.last')
     );
   }),
 
-  previousPage: computed('currentNode', function() {
-    return get(this, 'currentNode.prev.page');
+  nextPage: computed('_currentNode', function() {
+    return get(this, '_currentNode.next.page');
   }),
 
-  nextPage: computed('currentNode', function() {
-    return get(this, 'currentNode.next.page');
+  nextIsFirstPage: computed('_currentNode', function() {
+    return (
+      get(this, '_currentNode.next') ===
+      get(this, '_currentNode.next.parent.first')
+    );
   }),
 
-  previousSection: computed('currentNode', function() {
-    return get(this, 'currentNode.prev.parent.page');
+  nextIsLastPage: computed('_currentNode', function() {
+    return (
+      get(this, '_currentNode.next') ===
+      get(this, '_currentNode.next.parent.last')
+    );
   }),
 
-  nextSection: computed('currentNode', function() {
-    return get(this, 'currentNode.next.parent.page');
+  previousSection: computed('_currentNode', function() {
+    let current = get(this, '_currentNode');
+    let currentSection = get(this, 'currentSection');
+
+    while (current) {
+      if (get(current, 'parent.page') !== currentSection) {
+        return get(current, 'parent.page');
+      }
+
+      current = current.prev;
+    }
+  }),
+
+  nextSection: computed('_currentNode', function() {
+    let current = get(this, '_currentNode');
+    let currentSection = get(this, 'currentSection');
+
+    while (current) {
+      if (get(current, 'parent.page') !== currentSection) {
+        return get(current, 'parent.page');
+      }
+
+      current = current.next;
+    }
   }),
 });

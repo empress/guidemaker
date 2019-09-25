@@ -9,8 +9,8 @@ const mockPages = [
     title: 'Introduction',
     pages: [
       {
-        url: 'index',
-        title: 'Introduction',
+        url: '',
+        title: 'Getting Started',
       },
     ],
   },
@@ -76,11 +76,11 @@ const mockPages = [
     pages: [
       {
         url: 'subsection-as-first-and-last/subsection',
-        title: 'Subsection',
+        title: 'First and Last Subsection',
         pages: [
           {
             url: 'subsection-as-first-and-last/subsection/subsection-page',
-            title: 'Subsection Page',
+            title: 'First and Last Subsection Page',
           },
         ],
       },
@@ -147,86 +147,243 @@ module('Unit | service | page', () => {
 
     let pageTitles = [];
     let sectionTitles = [];
-    let wasFirstPage = [];
-    let wasLastPage = [];
+
+    let prevSectionTitles = [];
+    let nextSectionTitles = [];
+
+    let currentWasFirstPage = [];
+    let currentWasLastPage = [];
+
+    let prevWasFirstPage = [];
+    let prevWasLastPage = [];
+
+    let nextWasFirstPage = [];
+    let nextWasLastPage = [];
 
     // eslint-disable-next-line no-constant-condition
     while (true) {
       pageTitles.push(get(page, 'currentPage.title'));
       sectionTitles.push(get(page, 'currentSection.title'));
-      wasFirstPage.push(get(page, 'isFirstPage'));
-      wasLastPage.push(get(page, 'isLastPage'));
+
+      prevSectionTitles.push(get(page, 'previousSection.title'));
+      nextSectionTitles.push(get(page, 'nextSection.title'));
+
+      currentWasFirstPage.push(get(page, 'isFirstPage'));
+      currentWasLastPage.push(get(page, 'isLastPage'));
+
+      prevWasFirstPage.push(get(page, 'previousIsFirstPage'));
+      prevWasLastPage.push(get(page, 'previousIsLastPage'));
+
+      nextWasFirstPage.push(get(page, 'nextIsFirstPage'));
+      nextWasLastPage.push(get(page, 'nextIsLastPage'));
 
       if (get(page, 'nextPage')) {
-        set(content, 'id', get(page, 'nextPage.url'));
+        let url = get(page, 'nextPage.url');
+        set(content, 'id', url === '' ? 'index' : url);
       } else {
         break;
       }
     }
 
-    assert.deepEqual(pageTitles, [
-      'Introduction',
-      'Single Page',
-      'Multi Page One',
-      'Multi Page Two',
-      'Multi Page Three',
-      'Multi with Sub Page One',
-      'Multi with Sub Page Two',
-      'Subsection Page',
-      'Multi with Sub Page Three',
-      'Subsection Page',
-      'Subsection One Page',
-      'Subsection Two Page',
-      'Sub-Subsection Page',
-    ]);
+    assert.deepEqual(
+      pageTitles,
+      [
+        'Getting Started',
+        'Single Page',
+        'Multi Page One',
+        'Multi Page Two',
+        'Multi Page Three',
+        'Multi with Sub Page One',
+        'Multi with Sub Page Two',
+        'Subsection Page',
+        'Multi with Sub Page Three',
+        'First and Last Subsection Page',
+        'Subsection One Page',
+        'Subsection Two Page',
+        'Sub-Subsection Page',
+      ],
+      'page titles'
+    );
 
-    assert.deepEqual(sectionTitles, [
-      undefined,
-      'Single Page Section',
-      'Multi Page Section',
-      'Multi Page Section',
-      'Multi Page Section',
-      'Multi Page with Subsection',
-      'Multi Page with Subsection',
-      'Subsection',
-      'Multi Page with Subsection',
-      'Subsection',
-      'Subsection One',
-      'Subsection Two',
-      'Sub-Subsection',
-    ]);
+    assert.deepEqual(
+      sectionTitles,
+      [
+        'Introduction',
+        'Single Page Section',
+        'Multi Page Section',
+        'Multi Page Section',
+        'Multi Page Section',
+        'Multi Page with Subsection',
+        'Multi Page with Subsection',
+        'Subsection',
+        'Multi Page with Subsection',
+        'First and Last Subsection',
+        'Subsection One',
+        'Subsection Two',
+        'Sub-Subsection',
+      ],
+      'current section titles'
+    );
 
-    assert.deepEqual(wasFirstPage, [
-      true,
-      true,
-      true,
-      false,
-      false,
-      true,
-      false,
-      true,
-      false,
-      true,
-      true,
-      true,
-      true,
-    ]);
+    assert.deepEqual(
+      nextSectionTitles,
+      [
+        'Single Page Section',
+        'Multi Page Section',
+        'Multi Page with Subsection',
+        'Multi Page with Subsection',
+        'Multi Page with Subsection',
+        'Subsection',
+        'Subsection',
+        'Multi Page with Subsection',
+        'First and Last Subsection',
+        'Subsection One',
+        'Subsection Two',
+        'Sub-Subsection',
+        undefined,
+      ],
+      'next section titles'
+    );
 
-    assert.deepEqual(wasLastPage, [
-      true,
-      true,
-      false,
-      false,
-      true,
-      false,
-      false,
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-    ]);
+    assert.deepEqual(
+      prevSectionTitles,
+      [
+        undefined,
+        'Introduction',
+        'Single Page Section',
+        'Single Page Section',
+        'Single Page Section',
+        'Multi Page Section',
+        'Multi Page Section',
+        'Multi Page with Subsection',
+        'Subsection',
+        'Multi Page with Subsection',
+        'First and Last Subsection',
+        'Subsection One',
+        'Subsection Two',
+      ],
+      'next section titles'
+    );
+
+    assert.deepEqual(
+      currentWasFirstPage,
+      [
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+      ],
+      'current was the first page'
+    );
+
+    assert.deepEqual(
+      currentWasLastPage,
+      [
+        true,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+      ],
+      'current was the last page'
+    );
+
+    assert.deepEqual(
+      prevWasFirstPage,
+      [
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true,
+        true,
+        true,
+      ],
+      'prev was the first page'
+    );
+
+    assert.deepEqual(
+      prevWasLastPage,
+      [
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+      ],
+      'prev was the last page'
+    );
+
+    assert.deepEqual(
+      nextWasFirstPage,
+      [
+        true,
+        true,
+        false,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+      ],
+      'next was the first page'
+    );
+
+    assert.deepEqual(
+      nextWasLastPage,
+      [
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+      ],
+      'next was the last page'
+    );
   });
 
   test('can iterate backwards through pages', assert => {
@@ -240,86 +397,243 @@ module('Unit | service | page', () => {
 
     let pageTitles = [];
     let sectionTitles = [];
-    let wasFirstPage = [];
-    let wasLastPage = [];
+
+    let prevSectionTitles = [];
+    let nextSectionTitles = [];
+
+    let currentWasFirstPage = [];
+    let currentWasLastPage = [];
+
+    let prevWasFirstPage = [];
+    let prevWasLastPage = [];
+
+    let nextWasFirstPage = [];
+    let nextWasLastPage = [];
 
     // eslint-disable-next-line no-constant-condition
     while (true) {
       pageTitles.push(get(page, 'currentPage.title'));
       sectionTitles.push(get(page, 'currentSection.title'));
-      wasFirstPage.push(get(page, 'isFirstPage'));
-      wasLastPage.push(get(page, 'isLastPage'));
+
+      prevSectionTitles.push(get(page, 'previousSection.title'));
+      nextSectionTitles.push(get(page, 'nextSection.title'));
+
+      currentWasFirstPage.push(get(page, 'isFirstPage'));
+      currentWasLastPage.push(get(page, 'isLastPage'));
+
+      prevWasFirstPage.push(get(page, 'previousIsFirstPage'));
+      prevWasLastPage.push(get(page, 'previousIsLastPage'));
+
+      nextWasFirstPage.push(get(page, 'nextIsFirstPage'));
+      nextWasLastPage.push(get(page, 'nextIsLastPage'));
 
       if (get(page, 'previousPage')) {
-        set(content, 'id', get(page, 'previousPage.url'));
+        let url = get(page, 'previousPage.url');
+        set(content, 'id', url === '' ? 'index' : url);
       } else {
         break;
       }
     }
 
-    assert.deepEqual(pageTitles, [
-      'Sub-Subsection Page',
-      'Subsection Two Page',
-      'Subsection One Page',
-      'Subsection Page',
-      'Multi with Sub Page Three',
-      'Subsection Page',
-      'Multi with Sub Page Two',
-      'Multi with Sub Page One',
-      'Multi Page Three',
-      'Multi Page Two',
-      'Multi Page One',
-      'Single Page',
-      'Introduction',
-    ]);
+    assert.deepEqual(
+      pageTitles,
+      [
+        'Sub-Subsection Page',
+        'Subsection Two Page',
+        'Subsection One Page',
+        'First and Last Subsection Page',
+        'Multi with Sub Page Three',
+        'Subsection Page',
+        'Multi with Sub Page Two',
+        'Multi with Sub Page One',
+        'Multi Page Three',
+        'Multi Page Two',
+        'Multi Page One',
+        'Single Page',
+        'Getting Started',
+      ],
+      'page titles'
+    );
 
-    assert.deepEqual(sectionTitles, [
-      'Sub-Subsection',
-      'Subsection Two',
-      'Subsection One',
-      'Subsection',
-      'Multi Page with Subsection',
-      'Subsection',
-      'Multi Page with Subsection',
-      'Multi Page with Subsection',
-      'Multi Page Section',
-      'Multi Page Section',
-      'Multi Page Section',
-      'Single Page Section',
-      undefined,
-    ]);
+    assert.deepEqual(
+      sectionTitles,
+      [
+        'Sub-Subsection',
+        'Subsection Two',
+        'Subsection One',
+        'First and Last Subsection',
+        'Multi Page with Subsection',
+        'Subsection',
+        'Multi Page with Subsection',
+        'Multi Page with Subsection',
+        'Multi Page Section',
+        'Multi Page Section',
+        'Multi Page Section',
+        'Single Page Section',
+        'Introduction',
+      ],
+      'current section titles'
+    );
 
-    assert.deepEqual(wasFirstPage, [
-      true,
-      true,
-      true,
-      true,
-      false,
-      true,
-      false,
-      true,
-      false,
-      false,
-      true,
-      true,
-      true,
-    ]);
+    assert.deepEqual(
+      nextSectionTitles,
+      [
+        undefined,
+        'Sub-Subsection',
+        'Subsection Two',
+        'Subsection One',
+        'First and Last Subsection',
+        'Multi Page with Subsection',
+        'Subsection',
+        'Subsection',
+        'Multi Page with Subsection',
+        'Multi Page with Subsection',
+        'Multi Page with Subsection',
+        'Multi Page Section',
+        'Single Page Section',
+      ],
+      'next section titles'
+    );
 
-    assert.deepEqual(wasLastPage, [
-      true,
-      true,
-      true,
-      true,
-      true,
-      true,
-      false,
-      false,
-      true,
-      false,
-      false,
-      true,
-      true,
-    ]);
+    assert.deepEqual(
+      prevSectionTitles,
+      [
+        'Subsection Two',
+        'Subsection One',
+        'First and Last Subsection',
+        'Multi Page with Subsection',
+        'Subsection',
+        'Multi Page with Subsection',
+        'Multi Page Section',
+        'Multi Page Section',
+        'Single Page Section',
+        'Single Page Section',
+        'Single Page Section',
+        'Introduction',
+        undefined,
+      ],
+      'next section titles'
+    );
+
+    assert.deepEqual(
+      currentWasFirstPage,
+      [
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+      ],
+      'current was the first page'
+    );
+
+    assert.deepEqual(
+      currentWasLastPage,
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true,
+      ],
+      'current was the first page'
+    );
+
+    assert.deepEqual(
+      prevWasFirstPage,
+      [
+        true,
+        true,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+      ],
+      'prev was the first page'
+    );
+
+    assert.deepEqual(
+      prevWasLastPage,
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+      ],
+      'prev was the last page'
+    );
+
+    assert.deepEqual(
+      nextWasFirstPage,
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        true,
+      ],
+      'next was the first page'
+    );
+
+    assert.deepEqual(
+      nextWasLastPage,
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false,
+        true,
+      ],
+      'next was the last page'
+    );
   });
 
   test('throws on duplicate page definitions', assert => {
@@ -333,7 +647,7 @@ module('Unit | service | page', () => {
         title: 'Introduction',
         pages: [
           {
-            url: 'index',
+            url: '',
             title: 'Introduction',
           },
         ],
@@ -343,7 +657,7 @@ module('Unit | service | page', () => {
         title: 'Introduction',
         pages: [
           {
-            url: 'index',
+            url: '',
             title: 'Introduction',
           },
         ],
@@ -353,5 +667,78 @@ module('Unit | service | page', () => {
     assert.throws(() => {
       get(page, 'currentPage');
     }, /You can only have one page\/section with a given title at any level in the guides, received duplicate: index/);
+  });
+
+  test('throws if subpages do not include parent page paths', assert => {
+    let page = PageService.create();
+    let content = { id: 'index' };
+
+    set(page, 'content', content);
+    set(page, 'pages', [
+      {
+        id: 'index',
+        title: 'Introduction',
+        pages: [
+          {
+            url: 'bar/foo',
+            title: 'Introduction',
+          },
+        ],
+      },
+    ]);
+
+    assert.throws(() => {
+      get(page, 'currentPage');
+    }, /Received an invalid page url\/id: bar\/foo, whose parent url was: index./);
+  });
+
+  test('throws if passed `index` page with non-empty url string', assert => {
+    let page = PageService.create();
+    let content = { id: 'index' };
+
+    set(page, 'content', content);
+    set(page, 'pages', [
+      {
+        id: 'index',
+        title: 'Introduction',
+        pages: [
+          {
+            url: 'index/foo',
+            title: 'Introduction',
+          },
+        ],
+      },
+    ]);
+
+    assert.throws(() => {
+      get(page, 'currentPage');
+    }, /The `index` section of the guides must contain exactly one subpage with `url: ''/);
+  });
+
+  test('throws if passed `index` page with more than one sub page', assert => {
+    let page = PageService.create();
+    let content = { id: 'index' };
+
+    set(page, 'content', content);
+    set(page, 'pages', [
+      {
+        id: 'index',
+        title: 'Introduction',
+        pages: [
+          {
+            url: '',
+            title: 'Introduction',
+          },
+          {
+            url: 'index/2',
+            title: 'Introduction Part 2',
+          },
+        ],
+      },
+    ]);
+
+    assert.throws(() => {
+      get(page, 'currentPage');
+    }, /Assertion Failed: The `index` section of the guides must contain exactly one subpage with `url: ''`/);
   });
 });
