@@ -1,4 +1,15 @@
 
+2.0.0 / 2019-09-30
+==================
+
+  * Adds the ability to nest guide sections
+  * Change in behavior for the `page` service, `nextPage` and `previousPage` are now never nullish between sections, they always represent the actual next and previous page.
+  * New APIs on the `page` service:
+    * `nextIsFirstPage`
+    * `nextIsLastPage`
+    * `previousIsFirstPage`
+    * `previousIsLastPage`
+
 1.6.0 / 2019-08-09
 ==================
 
