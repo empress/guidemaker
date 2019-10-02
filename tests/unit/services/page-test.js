@@ -308,7 +308,7 @@ module('Unit | service | page', () => {
     assert.deepEqual(
       prevWasFirstPage,
       [
-        true,
+        false,
         true,
         true,
         true,
@@ -328,7 +328,7 @@ module('Unit | service | page', () => {
     assert.deepEqual(
       prevWasLastPage,
       [
-        true,
+        false,
         true,
         true,
         false,
@@ -360,7 +360,7 @@ module('Unit | service | page', () => {
         true,
         true,
         true,
-        true,
+        false,
       ],
       'next was the first page'
     );
@@ -380,7 +380,7 @@ module('Unit | service | page', () => {
         true,
         true,
         true,
-        true,
+        false,
       ],
       'next was the last page'
     );
@@ -570,7 +570,7 @@ module('Unit | service | page', () => {
         true,
         true,
         true,
-        true,
+        false,
       ],
       'prev was the first page'
     );
@@ -590,7 +590,7 @@ module('Unit | service | page', () => {
         false,
         true,
         true,
-        true,
+        false,
       ],
       'prev was the last page'
     );
@@ -598,7 +598,7 @@ module('Unit | service | page', () => {
     assert.deepEqual(
       nextWasFirstPage,
       [
-        true,
+        false,
         true,
         true,
         true,
@@ -618,7 +618,7 @@ module('Unit | service | page', () => {
     assert.deepEqual(
       nextWasLastPage,
       [
-        true,
+        false,
         true,
         true,
         true,
@@ -740,5 +740,39 @@ module('Unit | service | page', () => {
     assert.throws(() => {
       get(page, 'currentPage');
     }, /Assertion Failed: The `index` section of the guides must contain exactly one subpage with `url: ''`/);
+  });
+
+  test('does not throw if attempting to set the current page to non-existent page', assert => {
+    let page = PageService.create();
+    let content = { id: 'foo' };
+
+    set(page, 'content', content);
+    set(page, 'pages', [
+      {
+        id: 'index',
+        title: 'Introduction',
+        pages: [
+          {
+            url: '',
+            title: 'Getting Started',
+          },
+        ],
+      },
+    ]);
+
+    assert.equal(get(page, 'previousPage'), undefined);
+    assert.equal(get(page, 'currentPage'), undefined);
+    assert.equal(get(page, 'nextPage'), undefined);
+
+    assert.equal(get(page, 'previousSection'), undefined);
+    assert.equal(get(page, 'currentSection'), undefined);
+    assert.equal(get(page, 'nextSection'), undefined);
+
+    assert.equal(get(page, 'isFirstPage'), false);
+    assert.equal(get(page, 'isLastPage'), false);
+    assert.equal(get(page, 'previousIsFirstPage'), false);
+    assert.equal(get(page, 'previousIsLastPage'), false);
+    assert.equal(get(page, 'nextIsFirstPage'), false);
+    assert.equal(get(page, 'nextIsLastPage'), false);
   });
 });

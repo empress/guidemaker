@@ -1,3 +1,8 @@
+2.0.1 / 2019-10-02
+==================
+
+  * Fixes a bug where the page service would throw errors if the page didn't
+    exist in the ToC, but was a valid page URL.
 
 2.0.0 / 2019-09-30
 ==================

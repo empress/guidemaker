@@ -113,6 +113,10 @@ export default Service.extend({
 
     for (let segment of path) {
       current = current.subNodes.get(segment);
+
+      if (!current) {
+        return;
+      }
     }
 
     if (get(current, 'page.id') === 'index') {
@@ -143,11 +147,17 @@ export default Service.extend({
   }),
 
   isFirstPage: computed('_currentNode', function() {
-    return get(this, '_currentNode') === get(this, '_currentNode.parent.first');
+    return (
+      get(this, '_currentNode') !== undefined &&
+      get(this, '_currentNode') === get(this, '_currentNode.parent.first')
+    );
   }),
 
   isLastPage: computed('_currentNode', function() {
-    return get(this, '_currentNode') === get(this, '_currentNode.parent.last');
+    return (
+      get(this, '_currentNode') !== undefined &&
+      get(this, '_currentNode') === get(this, '_currentNode.parent.last')
+    );
   }),
 
   previousPage: computed('_currentNode', function() {
@@ -156,15 +166,17 @@ export default Service.extend({
 
   previousIsFirstPage: computed('_currentNode', function() {
     return (
+      get(this, '_currentNode.prev') !== undefined &&
       get(this, '_currentNode.prev') ===
-      get(this, '_currentNode.prev.parent.first')
+        get(this, '_currentNode.prev.parent.first')
     );
   }),
 
   previousIsLastPage: computed('_currentNode', function() {
     return (
+      get(this, '_currentNode.prev') !== undefined &&
       get(this, '_currentNode.prev') ===
-      get(this, '_currentNode.prev.parent.last')
+        get(this, '_currentNode.prev.parent.last')
     );
   }),
 
@@ -174,15 +186,17 @@ export default Service.extend({
 
   nextIsFirstPage: computed('_currentNode', function() {
     return (
+      get(this, '_currentNode.next') !== undefined &&
       get(this, '_currentNode.next') ===
-      get(this, '_currentNode.next.parent.first')
+        get(this, '_currentNode.next.parent.first')
     );
   }),
 
   nextIsLastPage: computed('_currentNode', function() {
     return (
+      get(this, '_currentNode.next') !== undefined &&
       get(this, '_currentNode.next') ===
-      get(this, '_currentNode.next.parent.last')
+        get(this, '_currentNode.next.parent.last')
     );
   }),
 
