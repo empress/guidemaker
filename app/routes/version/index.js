@@ -14,11 +14,7 @@ export default Route.extend({
           version,
         }
       }),
-      pages: this.store.findAll('page', {
-        adapterOptions: {
-          version: version
-        }
-      }),
+      // pages: this.store.query('page', { version }),
       version,
       currentVersion,
     });
