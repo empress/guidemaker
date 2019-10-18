@@ -12,3 +12,8 @@
       url: "index"
     - title: "Editing"
       url: "editing"
+
+- title: "Old Content"
+  url: "old-content"
+  pages:
+    - title: "Introduction"
