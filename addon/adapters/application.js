@@ -14,7 +14,6 @@ export default DS.JSONAPIAdapter.extend({
     if (requestType !== 'query' || modelName !== 'page') {
       return this._super(...arguments);
     }
-
     let url = ['content', query.version, 'pages.json'];
 
     let host = this.host;
@@ -26,7 +25,12 @@ export default DS.JSONAPIAdapter.extend({
     if (!host && url && url.charAt(0) !== '/') {
       url = '/' + url;
     }
-
     return url;
+  },
+
+  query(store, type, query) {
+    // we have to override query because Netlify is buggy when you send queryParams
+    let url = this.buildURL(type.modelName, null, null, 'query', query);
+    return this.ajax(url, 'GET');
   },
 });

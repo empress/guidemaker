@@ -14,7 +14,6 @@ export default Route.extend({
           version,
         }
       }),
-      // pages: this.store.query('page', { version }),
       version,
       currentVersion,
     });
