@@ -1,3 +1,9 @@
+
+2.0.2 / 2019-10-21
+==================
+
+  * revert to using query for the Table of Contents #25 from @jenweber
+
 2.0.1 / 2019-10-02
 ==================
 
