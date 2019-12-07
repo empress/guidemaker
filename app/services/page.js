@@ -36,13 +36,15 @@ import { assert } from '@ember/debug';
  * }
  */
 function buildPageTreeNode(pages, page, parent, depth = 0) {
+  let filteredPages = pages.filter(page => !page.isHeading);
+
   let pageTreeNode = {
     page,
     parent,
     subNodes: new Map(),
   };
 
-  let subNodes = pages.map(page =>
+  let subNodes = filteredPages.map(page =>
     page.pages
       ? buildPageTreeNode(page.pages, page, pageTreeNode, depth + 1)
       : { page, parent: pageTreeNode }
