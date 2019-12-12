@@ -9,10 +9,9 @@ export default Route.extend({
     let { version, currentVersion } = this.modelFor('version');
 
     return hash({
-      content: this.store.findRecord('content', 'index', {
-        adapterOptions: {
-          version,
-        }
+      content: this.store.queryRecord('content', {
+        path: 'index',
+        version,
       }),
       version,
       currentVersion,

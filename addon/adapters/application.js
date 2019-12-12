@@ -11,10 +11,12 @@ export default DS.JSONAPIAdapter.extend({
   },
 
   buildURL(modelName, id, snapshot, requestType, query) {
-    if (requestType !== 'query' || modelName !== 'page') {
-      return this._super(...arguments);
+    let url = [];
+    if (!query.path) {
+      url = ['content', query.version, 'pages.json'];
+    } else {
+      url = ['content', query.version, query.path + '.json'];
     }
-    let url = ['content', query.version, 'pages.json'];
 
     let host = this.host;
     let prefix = this.urlPrefix();
@@ -30,6 +32,11 @@ export default DS.JSONAPIAdapter.extend({
 
   query(store, type, query) {
     // we have to override query because Netlify is buggy when you send queryParams
+    let url = this.buildURL(type.modelName, null, null, 'query', query);
+    return this.ajax(url, 'GET');
+  },
+  queryRecord(store, type, query) {
+    // we have to override queryRecord because Netlify is buggy when you send queryParams
     let url = this.buildURL(type.modelName, null, null, 'query', query);
     return this.ajax(url, 'GET');
   },
