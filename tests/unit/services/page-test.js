@@ -15,6 +15,11 @@ const mockPages = [
     ],
   },
   {
+    id: 'toc-heading',
+    title: 'Heading',
+    isHeading: true,
+  },
+  {
     id: 'single-page-section',
     title: 'Single Page Section',
     pages: [
