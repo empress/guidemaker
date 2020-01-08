@@ -11,6 +11,13 @@ module.exports = function(defaults) {
         }
       }
     },
+    autoImport: {
+      webpack: {
+        node: {
+          process: true
+        },
+      },
+    }
   });
 
   /*
