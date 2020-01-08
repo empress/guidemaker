@@ -213,6 +213,8 @@ export default Service.extend({
 
       current = current.prev;
     }
+
+    return;
   }),
 
   nextSection: computed('_currentNode', function() {
@@ -226,5 +228,7 @@ export default Service.extend({
 
       current = current.next;
     }
+
+    return;
   }),
 });
