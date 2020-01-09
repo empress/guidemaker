@@ -1,4 +1,10 @@
 
+2.1.0 / 2020-01-09
+==================
+
+  * Update ember and broccoli-static-site-json #32 from @mansona
+  * Adds is_heading so ToC items can specify that they are headings #28 from @pzuraq
+
 2.0.2 / 2019-10-21
 ==================
 
