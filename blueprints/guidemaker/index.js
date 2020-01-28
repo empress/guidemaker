@@ -2,6 +2,7 @@
 
 const recast = require('recast');
 const { readFileSync, writeFileSync } = require('fs');
+const { applyBuildConfig } = require('empress-blueprint-helpers');
 
 const builders = recast.types.builders;
 
@@ -26,58 +27,9 @@ module.exports = {
       ]
     });
 
-    const code = readFileSync('./ember-cli-build.js');
-    const ast = recast.parse(code);
-
-    recast.visit(ast, {
-      visitNewExpression: function (path) {
-        var node = path.node;
-
-        if (node.callee.name === 'EmberApp'
-            || node.callee.name === 'EmberAddon') {
-          // console.log(node, node.arguments)
-          const configNode = node.arguments.find(element => element.type === 'ObjectExpression');
-
-          let fingerprint = configNode.properties.find(property => {
-            return property.key.name === 'fingerprint'
-          });
-
-          if(!fingerprint) {
-            fingerprint = builders.property(
-              'init',
-              builders.identifier('fingerprint'),
-              builders.objectExpression([])
-            )
-            configNode.properties.push(fingerprint);
-          }
-
-          // remove image extensions from the fingerprint config
-          let extensions = fingerprint.value.properties.find(property => property.key.name === 'extensions');
-
-          if(!extensions) {
-            extensions = recast.types.builders.property(
-              'init',
-              builders.identifier('extensions'),
-              builders.arrayPattern([])
-            );
-
-            fingerprint.value.properties.push(extensions);
-          }
-
-          extensions.value = builders.arrayPattern([
-            builders.literal('js'),
-            builders.literal('css'),
-            builders.literal('map'),
-          ]);
-
-          return false;
-        } else {
-          this.traverse(path);
-        }
-      }
-    });
-
-    writeFileSync('./ember-cli-build.js', recast.print(ast, { tabWidth: 2, quote: 'single' }).code);
+    applyBuildConfig('fingerprint', {
+      extensions: ['js', 'css', 'map'],
+    })
 
     const config = readFileSync('./config/environment.js');
     const configAst = recast.parse(config);
