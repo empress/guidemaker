@@ -40,7 +40,6 @@
     "empress-blueprint-helpers": "^1.2.0",
     "js-yaml": "^3.13.1",
     "jsonapi-serializer": "^3.6.4",
-    "recast": "^0.18.5",
     "resolve": "^1.11.1",
     "showdown-section-groups": "^0.3.0",
     "walk-sync": "^2.0.2",
