@@ -240,6 +240,13 @@ You should move it into the 'guides' folder.
   },
 
   config(env, config) {
+    let guidemaker = config.guidemaker || {};
+
+    let emberMetaConfig = {
+      description: guidemaker.description,
+      title: guidemaker.title,
+    }
+
     let fastboot = config.fastboot || {};
 
     if(fastboot.hostWhitelist) {
@@ -250,6 +257,7 @@ You should move it into the 'guides' folder.
 
     return {
       fastboot,
+      'ember-meta': emberMetaConfig,
       // TODO: investigate this bug - remove it and see why it breaks
       'ember-collapsible-panel': config['ember-collapsible-panel'] || {}
     }
