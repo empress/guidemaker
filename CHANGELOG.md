@@ -1,4 +1,10 @@
 
+2.2.0 / 2020-01-29
+==================
+
+  * Fix initial install using empress-blueprint-helpers to simplify blueprint  #36 from @mansona
+  * fix extra 404 when visiting index pages #37 from @mansona
+
 2.1.0 / 2020-01-09
 ==================
 
