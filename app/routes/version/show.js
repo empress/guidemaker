@@ -7,10 +7,39 @@ function isExternalRedirect(redirect) {
   return redirect.match(/^https?:\/\//);
 }
 
+/**
+ * This function is designed  to normalise a simple path that is expected to hit
+ * an index and thus avoiding the extra 404 request when visiting the first
+ * part of a section
+ *
+ * This is not designed to be perfect and will only work in a majority of cases
+ * as it will fall back to the existing behaviour if it is unable to normalise
+ * the path
+ *
+ * @param  {[string]} path        [the current path]
+ * @param  {[RecordArray]} pages  [the pages objectfor the current version]
+ * @return {[string]}             [a normalised path if we think it needs to be normalised]
+ */
+function normalisePath(path, pages) {
+  let parts = path.split('/');
+
+  let currentPage = pages.find(page => page.id === parts[0]);
+
+  if (
+    parts.length === 1
+    && currentPage.pages
+    && currentPage.pages.find(page => page.url === `${path}/index`)
+  ) {
+    return `${path}/index`
+  }
+
+  return path;
+}
+
 export default Route.extend({
   page: service(),
   model(params) {
-    const path = params.path.replace(/\/$/, '');
+    let path = params.path.replace(/\/$/, '');
 
     if (path === 'index') {
       return this.transitionTo('version');
@@ -25,6 +54,8 @@ export default Route.extend({
       currentVersion,
       pages,
     } = this.modelFor('version');
+
+    path = normalisePath(path, pages);
 
     let contentPromise = this.store.queryRecord('content', {
       path,
