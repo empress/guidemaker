@@ -25,6 +25,14 @@ function normalisePath(path, pages) {
 
   let currentPage = pages.find(page => page.id === parts[0]);
 
+
+  // if the current page is not found then we might be in a redirect file for a
+  // section that has been removed from the ToC. In this case we're not going to
+  // be able to normalise the path so just return it without change.
+  if(!currentPage) {
+    return path;
+  }
+
   if (
     parts.length === 1
     && currentPage.pages
