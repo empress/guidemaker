@@ -1,4 +1,9 @@
 
+2.2.1 / 2020-02-16
+==================
+
+  * bugfix - cannot read length of undefined #38 from @jenweber
+
 2.2.0 / 2020-01-29
 ==================
 
