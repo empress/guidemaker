@@ -1,1 +1,1 @@
-Here is a page with content that was removed in later versions.
+Here is a page with content that will be removed in later versions.

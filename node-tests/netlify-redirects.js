@@ -23,6 +23,7 @@ describe('netlifyRedirects() function in index', function () {
       '/release/getting-started/redirect /release/getting-started/editing',
       '/v1.2.0/getting-started/redirect /release/getting-started/editing',
       '/v1.0.0/getting-started/redirect /v1.0.0/getting-started/editing',
+      '/v1.1.0/old-content /v1.1.0/getting-started'
     ]);
   })
 });
