@@ -1,12 +1,13 @@
 'use strict';
 
 const BroccoliMergeTrees = require('broccoli-merge-trees');
+const compareVersions = require('compare-versions');
 const Funnel = require('broccoli-funnel');
+const resolve = require('resolve');
 const StaticSiteJson = require('broccoli-static-site-json');
 const walkSync = require('walk-sync');
 const writeFile = require('broccoli-file-creator');
 const yaml = require('js-yaml');
-const resolve = require('resolve');
 const yamlFront = require('yaml-front-matter');
 
 const { readFileSync, existsSync } = require('fs');
@@ -25,6 +26,7 @@ const VersionsSerializer = new Serializer('version', {
 module.exports = {
   name: require('./package').name,
   urlsForPrember() {
+    const guidemakerOptions = this.app.options.guidemaker || {};
     const guidesSrcPkg = this.getGuidesSrcPkg();
     let urls = []
 
@@ -44,7 +46,23 @@ module.exports = {
 
       urls.push('/release')
     } else {
-      let premberVersions = [...versions.allVersions, 'release'];
+      let premberVersions = versions.allVersions;
+
+      if(guidemakerOptions.premberVersionFilter) {
+        if(typeof guidemakerOptions.premberVersionFilter === 'function') {
+          premberVersions = versions.allVersions.filter(guidemakerOptions.premberVersionFilter);
+        } else if (typeof guidemakerOptions.premberVersionFilter === 'string') {
+          premberVersions = versions.allVersions.filter((version) => {
+            return compareVersions.compare(version, guidemakerOptions.premberVersionFilter, '>=');
+          });
+        } else {
+          throw Error(`'premberVersionFilter' should be either a function or a string of the version you want to build from`);
+        }
+      }
+
+      // always build release
+      premberVersions.push('release');
+
       urls = [...urls, ...premberVersions.map(version => `/${version}`)];
 
       premberVersions.forEach((premberVersion) => {
