@@ -1,4 +1,9 @@
 
+2.3.0 / 2020-02-16
+==================
+
+  * add `premberVersionFilter` functionality to allow for partial builds #33 from @mansona
+
 2.2.1 / 2020-02-16
 ==================
 
