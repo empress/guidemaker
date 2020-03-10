@@ -21,24 +21,24 @@ function isExternalRedirect(redirect) {
  * @return {[string]}             [a normalised path if we think it needs to be normalised]
  */
 function normalisePath(path, pages) {
-  let parts = path.split('/');
+  // walk the structure of the pages object to find any matching indexes
+  function walkPages(path, pages) {
+    if(pages) {
+      if (pages.find(page => page.url === `${path}/index`)) {
+        return true;
+      }
 
-  let currentPage = pages.find(page => page.id === parts[0]);
-
-
-  // if the current page is not found then we might be in a redirect file for a
-  // section that has been removed from the ToC. In this case we're not going to
-  // be able to normalise the path so just return it without change.
-  if(!currentPage) {
-    return path;
+      // if any of the nested pages have a matching page (recursive)
+      return pages.find((page) => {
+        if(page.pages) {
+          return walkPages(path, page.pages);
+        }
+      });
+    }
   }
 
-  if (
-    parts.length === 1
-    && currentPage.pages
-    && currentPage.pages.find(page => page.url === `${path}/index`)
-  ) {
-    return `${path}/index`
+  if(walkPages(path, pages)) {
+    return `${path}/index`;
   }
 
   return path;
