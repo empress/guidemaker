@@ -1,4 +1,10 @@
 
+2.4.0 / 2020-03-10
+==================
+
+  * fix "slow index" bug for nested sections #39 from @mansona
+  * update using ember-cli-update #39 from @mansona
+
 2.3.0 / 2020-02-16
 ==================
 
