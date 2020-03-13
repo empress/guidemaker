@@ -1,6 +1,9 @@
 import DS from 'ember-data';
+import config from '../config/environment';
 
 export default DS.JSONAPIAdapter.extend({
+  namespace: config.rootURL,
+
   buildURL() {
     let url = ['content', 'versions.json'];
     let host = this.host;
