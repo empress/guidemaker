@@ -1,3 +1,10 @@
+2.5.0 / 2021-04-22
+==================
+
+* add sourceBranch as a guidemaker config param #54 from @mansona
+* move from Travis to Github CI #55 from @mansona
+* resolve default serializer deprecation #41 from @jenweber
+
 
 2.4.0 / 2020-03-10
 ==================
