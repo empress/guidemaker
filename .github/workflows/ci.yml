@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - "v*"
+  pull_request:
+
+env:
+  FORCE_COLOR: 1
+
+jobs:
+  test:
+    name: Tests and Linting
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: mansona/npm-lockfile-version@v1
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 10.x
+      - run: npm i -g npm@7
+      - run: npm ci
+      - run: npm run lint:hbs
+      - run: npm run lint:js
+      - run: npm run test:node
+      - run: npm run test:ember
+      - run: npx ember build -prod
+
+  floating-dependencies:
+    name: Floating Dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 10.x
+      - run: npm i -g npm@7
+      - run: npm install --no-package-lock
+      - run: npm test
+
+  try-scenarios:
+    name: "ember-try: ${{ matrix.ember-try-scenario }}"
+    runs-on: ubuntu-latest
+    needs: test
+
+    strategy:
+      matrix:
+        ember-try-scenario:
+          - ember-lts-3.12
+          - ember-lts-3.16
+          - ember-release
+          - ember-beta
+          - ember-default-with-jquery
+          - ember-classic
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 10.x
+      - run: npm i -g npm@7
+      - run: npm ci
+
+      - name: test
+        run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
