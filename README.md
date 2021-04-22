@@ -84,6 +84,9 @@ guidemaker: {
   // this should be the link to your documentation source - if you provide one it will add an edit button on each page
   // sourceRepo: 'https://github.com/authmaker/documentation',
 
+  // this allows you to override the branch that is used in the edit button (if you have provided a sourceRepo). It is up to the templates, but most of them default to master if you don't provide this setting
+  // sourceBranch: 'master'
+
   // when true the Table of Contents will be collapsed and you will need to click each header to expand
   // default - false
   collapseToc: true,
