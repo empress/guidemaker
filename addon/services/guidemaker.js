@@ -15,5 +15,6 @@ export default Service.extend({
   social: configParam('social'),
   copyright: configParam('copyright'),
   sourceRepo: configParam('sourceRepo'),
+  sourceBranch: configParam('sourceBranch'),
   collapseToc: configParam('collapseToc'),
 });
