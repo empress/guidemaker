@@ -23,7 +23,7 @@
     "test": "npm run test:node && npm run test:ember",
     "test:ember": "ember test",
     "test:node": "mocha node-tests",
-    "test:all": "ember try:each"
+    "ember-compatibility-tests": "ember try:each"
   },
   "dependencies": {
     "broccoli-file-creator": "^2.1.1",
