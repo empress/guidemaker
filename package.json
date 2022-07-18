@@ -40,7 +40,7 @@
     "ember-cli-babel": "^7.26.10",
     "ember-cli-htmlbars": "^5.7.2",
     "ember-cli-showdown": "^4.4.4",
-    "ember-get-config": "^0.2.4",
+    "ember-get-config": "^2.1.1",
     "ember-meta": "^0.6.1",
     "ember-scroll": "^1.0.3",
     "empress-blueprint-helpers": "^1.2.0",
