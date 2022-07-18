@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-classic-classes, prettier/prettier */
 import HistoryLocation from '@ember/routing/history-location';
 
 export default HistoryLocation.extend({

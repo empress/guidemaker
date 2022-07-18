@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier, ember/no-classic-classes, ember/require-computed-property-dependencies, ember/no-get */
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { get, computed } from '@ember/object';

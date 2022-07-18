@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-env node */
 
 const { readFileSync, writeFileSync } = require('fs');

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier, ember/no-get */
 import { visit } from '@ember/test-helpers';
 import { get } from '@ember/object';
 import { percySnapshot } from 'ember-percy';

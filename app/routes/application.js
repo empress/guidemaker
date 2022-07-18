@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-classic-classes, prettier/prettier, ember/no-get */
 import Route from '@ember/routing/route';
 import { get } from '@ember/object';
 
