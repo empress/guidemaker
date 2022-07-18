@@ -26,7 +26,6 @@
     "start": "ember serve",
     "test": "npm-run-all lint test:*",
     "test:ember": "ember test",
-    "test:ember-compatibility": "ember try:each",
     "test:node": "mocha node-tests",
     "ember-compatibility-tests": "ember try:each"
   },
