@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const index = require('../index');
 const { expect } = require('chai');
 

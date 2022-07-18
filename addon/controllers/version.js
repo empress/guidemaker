@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier, ember/no-classic-classes, ember/no-get, ember/no-actions-hash */
 import Controller, {
   inject as controller,
 } from '@ember/controller';

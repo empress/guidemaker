@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 'use strict';
 
 const BroccoliMergeTrees = require('broccoli-merge-trees');
