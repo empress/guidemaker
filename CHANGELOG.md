@@ -1,3 +1,12 @@
+3.0.0-0 (prerelease) / 2022-07-20
+==================
+
+* Fix deprecations #71 from @mansona
+* add no-deprecations ember-try scenarios #58 from @mansona
+* Update ember-get-config #63 from @mansona
+* breaking: drop support for Ember &lt; 3.16 - Update ember to 3.28 using ember-cli-update #68 from @mansona
+* breaking: drop support for Node &lt; 14 #64 from @mansona
+
 2.6.0 / 2021-07-22
 ==================
 
