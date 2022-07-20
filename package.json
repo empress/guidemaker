@@ -1,6 +1,6 @@
 {
   "name": "guidemaker",
-  "version": "2.6.0",
+  "version": "3.0.0-0",
   "description": "Guidemaker Core Engine",
   "keywords": [
     "ember-addon",
