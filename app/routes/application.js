@@ -1,17 +1,1 @@
-/* eslint-disable ember/no-classic-classes, prettier/prettier, ember/no-get */
-import Route from '@ember/routing/route';
-import { get } from '@ember/object';
-
-export default Route.extend({
-  model() {
-    return this.store.findRecord('version', 'versions').then(null, (err) => {
-      if(['404', '403'].includes(get(err, 'errors.0.status'))) {
-        return {
-          currentVersion: 'release',
-        }
-      }
-
-      throw err;
-    });
-  }
-});
+export { default } from 'guidemaker/routes/application';
