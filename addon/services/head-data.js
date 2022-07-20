@@ -28,7 +28,7 @@ export default HeadData.extend({
   }),
 
   description: computed('routeName', function() {
-    return this.getWithDefault('currentRouteModel.description', config['ember-meta'].description);
+    return this.currentRouteModel?.description ?? config['ember-meta'].description;
   }),
 
   slug: computed('routeName', function() {
