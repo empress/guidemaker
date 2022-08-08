@@ -28,7 +28,7 @@ jobs:
       - run: npm run lint
       - run: npm run test:node
       - run: npm run test:ember
-      - run: npx ember build -prod
+      - run: npm run build
 
   floating-dependencies:
     name: Floating Dependencies
@@ -43,6 +43,7 @@ jobs:
       - run: npm i -g npm@8
       - run: npm install --no-package-lock
       - run: npm run test:ember
+      - run: npm run build
 
   try-scenarios:
     name: "ember-try: ${{ matrix.ember-try-scenario }}"
@@ -78,3 +79,4 @@ jobs:
 
       - name: test
         run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
+      - run: npm run build
