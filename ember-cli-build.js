@@ -11,13 +11,6 @@ module.exports = function (defaults) {
           collapse_vars: false
         }
       }
-    },
-    autoImport: {
-      webpack: {
-        node: {
-          process: true
-        },
-      },
     }
   });
 
