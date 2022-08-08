@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 14.x
           cache: npm
-      - run: npm i -g npm@7
+      - run: npm i -g npm@8
       - run: npm ci
       - run: npm run lint
       - run: npm run test:node
@@ -40,7 +40,7 @@ jobs:
         with:
           node-version: 14.x
           cache: npm
-      - run: npm i -g npm@7
+      - run: npm i -g npm@8
       - run: npm install --no-package-lock
       - run: npm run test:ember
 
@@ -73,7 +73,7 @@ jobs:
         with:
           node-version: 14.x
           cache: npm
-      - run: npm i -g npm@7
+      - run: npm i -g npm@8
       - run: npm ci
 
       - name: test
