@@ -1,3 +1,8 @@
+3.0.0-1 / 2022-08-10
+==================
+
+* update to ember-auto-import@2 #73 from @mansona
+
 3.0.0-0 (prerelease) / 2022-07-20
 ==================
 
