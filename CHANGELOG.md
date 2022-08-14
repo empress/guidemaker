@@ -1,3 +1,16 @@
+3.0.0 / 2022-08-14
+==================
+
+* update dependencies to fix CI #74 from @mansona
+* fix transitionTo deprecations #76 from @mansona
+* fix ember-try for pre-releases #75 from @mansona
+* update to ember-auto-import@2 #73 from @mansona
+* Fix deprecations #71 from @mansona
+* add no-deprecations ember-try scenarios #58 from @mansona
+* Update ember-get-config #63 from @mansona
+* breaking: drop support for Ember &lt; 3.16 - Update ember to 3.28 using ember-cli-update #68 from @mansona
+* breaking: drop support for Node &lt; 14 #64 from @mansona
+
 3.0.0-1 / 2022-08-10
 ==================
 
