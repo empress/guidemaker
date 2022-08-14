@@ -100,7 +100,7 @@ export default class VersionShowRoute extends Route {
           window.location.replace(redirect);
         }
       } else {
-        this.transitionTo('version.show', redirect);
+        this.router.transitionTo('version.show', redirect);
       }
     }
 
