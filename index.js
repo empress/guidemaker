@@ -220,13 +220,17 @@ You should move it into the 'guides' folder.
 
     const versions = this.getVersions();
 
+    const sharedOptions = {
+      contentTypes: ['content', 'description', 'toc'],
+      type: 'contents',
+      attributes: ['canonical', 'redirect'],
+    }
+
     // the source package does not support versions
     if(!versions) {
       broccoliTrees.push(new StaticSiteJson(`${guidesSrcPkg}/guides`, {
         contentFolder: `content/release`,
-        contentTypes: ['content', 'description'],
-        type: 'contents',
-        attributes: ['canonical', 'redirect'],
+        ...sharedOptions,
       }))
     } else {
       const jsonTrees = versions.allVersions.map((listedVersion) => {
@@ -234,17 +238,13 @@ You should move it into the 'guides' folder.
 
         return new StaticSiteJson(`${guidesSrcPkg}/guides/${version}`, {
           contentFolder: `content/${version}`,
-          contentTypes: ['content', 'description'],
-          type: 'contents',
-          attributes: ['canonical', 'redirect'],
+          ...sharedOptions,
         })
       });
 
       jsonTrees.push(new StaticSiteJson(`${guidesSrcPkg}/guides/release`, {
         contentFolder: `content/${versions.currentVersion}`,
-        contentTypes: ['content', 'description'],
-        type: 'contents',
-        attributes: ['canonical', 'redirect'],
+        ...sharedOptions,
       }));
 
       // setting an ID so that it's not undefined

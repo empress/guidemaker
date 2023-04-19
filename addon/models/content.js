@@ -6,4 +6,5 @@ export default class ContentModel extends Model {
   @attr description;
   @attr canonical;
   @attr redirect;
+  @attr toc;
 }
