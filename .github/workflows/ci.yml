@@ -59,14 +59,11 @@ jobs:
           - ember-lts-3.24
           - ember-lts-3.28
           - ember-release
-          - ember-beta
-          - ember-canary
           - ember-default-with-jquery
           - ember-classic
           - embroider-safe
           - embroider-optimized
           - no-deprecations
-          - ember-release-no-deprecations
 
     steps:
       - uses: actions/checkout@v2
@@ -80,3 +77,39 @@ jobs:
       - name: test
         run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
       - run: npm run build
+
+  allow-fail-try-scenarios:
+    name: ${{ matrix.try-scenario }} - Allowed to fail
+    runs-on: ubuntu-latest
+    needs: 'test'
+
+    permissions:
+      pull-requests: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        try-scenario:
+          - ember-canary
+          - ember-beta
+          - ember-release-no-deprecations
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+          cache: npm
+      - run: npm i -g npm@8
+      - run: npm ci
+
+      - run: npm run build
+      - name: test
+        id: tests
+        run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
+        continue-on-error: true
+      - uses: mainmatter/continue-on-error-comment@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          outcome: ${{ steps.tests.outcome }}
+          test-id: ${{ matrix.try-scenario }}
