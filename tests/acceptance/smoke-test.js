@@ -13,7 +13,7 @@ module('Acceptance | smoke', function (hooks) {
     let pages = store.peekAll('page');
 
     for (let section of pages.toArray()) {
-      for (let page of section.pages) {
+      for (let page of section?.pages ?? []) {
         await visit(`/release/${page.url}`);
       }
     }
