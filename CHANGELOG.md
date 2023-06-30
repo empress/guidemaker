@@ -1,3 +1,8 @@
+3.2.0 / 2023-06-30
+==================
+
+* Load the showdown config from environment and pass it to broccoli-static-site-json #92 from @mansona
+
 3.1.0 / 2023-04-21
 ==================
 
