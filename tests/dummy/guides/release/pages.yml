@@ -1,3 +1,7 @@
+- title: "Introduction"
+  url: "toc-heading_introduction"
+  is_heading: true
+
 - title: "Guides and Tutorials"
   url: 'index'
   skip_toc: true
@@ -12,3 +16,34 @@
       url: "index"
     - title: "Editing"
       url: "editing"
+
+- title: "Another Section"
+  url: 'another-section'
+  pages:
+    - title: "Introduction"
+      url: "index"
+    - title: "Page 1"
+      url: "page-1"
+    - title: "Subsection"
+      url: "subsection"
+      pages:
+        - title: "Introduction"
+          url: "index"
+        - title: "Page 2"
+          url: "page-2"
+    - title: "Page 3"
+      url: "page-3"
+
+- title: "Core Concepts"
+  url: "toc-heading_core-concepts"
+  is_heading: true
+
+- title: "Examples"
+  url: 'examples'
+  pages:
+    - title: "Basic Markdown"
+      url: "index"
+    - title: "Code Syntax Highlighting"
+      url: "syntax-highlighting"
+    - title: "Callouts"
+      url: 'callouts'

@@ -226,10 +226,14 @@ You should move it into the 'guides' folder.
       attributes: ['canonical', 'redirect'],
     }
 
+    // we can't check the environment here so we will only include default config
+    const addonConfig = require(this.project.configPath())();
+
     // the source package does not support versions
     if(!versions) {
       broccoliTrees.push(new StaticSiteJson(`${guidesSrcPkg}/guides`, {
         contentFolder: `content/release`,
+        showdownConfig: addonConfig.showdown,
         ...sharedOptions,
       }))
     } else {
@@ -238,12 +242,14 @@ You should move it into the 'guides' folder.
 
         return new StaticSiteJson(`${guidesSrcPkg}/guides/${version}`, {
           contentFolder: `content/${version}`,
+          showdownConfig: addonConfig.showdown,
           ...sharedOptions,
         })
       });
 
       jsonTrees.push(new StaticSiteJson(`${guidesSrcPkg}/guides/release`, {
         contentFolder: `content/${versions.currentVersion}`,
+        showdownConfig: addonConfig.showdown,
         ...sharedOptions,
       }));
 
