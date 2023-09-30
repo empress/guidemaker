@@ -1,3 +1,12 @@
+
+## v3.2.1 (2023-09-30)
+
+#### :bug: Bug Fix
+* [#93](https://github.com/empress/guidemaker/pull/93) Removed `included()` method, which only added `ember-prism` options.  ([@lupestro](https://github.com/lupestro))
+
+#### Committers: 1
+- Ralph Mack ([@lupestro](https://github.com/lupestro))
+
 3.2.0 / 2023-06-30
 ==================
 
