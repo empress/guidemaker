@@ -10,6 +10,8 @@ import compareVersions from 'compare-versions';
 export default Controller.extend({
   page: service(),
   application: controller(),
+  store: service(),
+  router: service(),
 
   pages: alias('model.pages'),
 
@@ -28,9 +30,9 @@ export default Controller.extend({
       // Navigate to same section/page if it exists
       const path = get(this, 'page.currentPage.url');
       this.store.queryRecord('content', {version, path}).then(() => {
-        this.transitionToRoute(`/${version}/${path}`);
+        this.router.transitionTo(`/${version}/${path}`);
       }).catch(() => {
-        this.transitionToRoute('version', version);
+        this.router.transitionTo('version', version);
       })
     }
   }
