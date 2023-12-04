@@ -96,6 +96,7 @@
     "qunit": "^2.17.2",
     "qunit-dom": "^1.6.0",
     "release-it": "^15.5.0",
+    "release-plan": "^0.4.0",
     "webpack": "^5.74.0"
   },
   "engines": {
