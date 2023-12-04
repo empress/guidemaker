@@ -1,4 +1,18 @@
 # Guidemaker Changelog
+## Release (2023-12-04)
+
+guidemaker 3.3.0 (minor)
+
+#### :rocket: Enhancement
+* [#94](https://github.com/empress/guidemaker/pull/94) Fix implicit-injections and routing.transition-methods deprecations ([@bartocc](https://github.com/bartocc))
+
+#### :house: Internal
+* [#98](https://github.com/empress/guidemaker/pull/98) update and fix release-plan ([@mansona](https://github.com/mansona))
+* [#97](https://github.com/empress/guidemaker/pull/97) Setup release-plan ([@mansona](https://github.com/mansona))
+
+#### Committers: 2
+- Chris Manson ([@mansona](https://github.com/mansona))
+- Julien Palmas ([@bartocc](https://github.com/bartocc))
 
 ## v3.2.1 (2023-09-30)
 

@@ -1,0 +1,21 @@
+{
+  "solution": {
+    "guidemaker": {
+      "impact": "minor",
+      "oldVersion": "3.2.1",
+      "newVersion": "3.3.0",
+      "constraints": [
+        {
+          "impact": "minor",
+          "reason": "Appears in changelog section :rocket: Enhancement"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
+        }
+      ],
+      "pkgJSONPath": "./package.json"
+    }
+  },
+  "description": "## Release (2023-12-04)\n\nguidemaker 3.3.0 (minor)\n\n#### :rocket: Enhancement\n* [#94](https://github.com/empress/guidemaker/pull/94) Fix implicit-injections and routing.transition-methods deprecations ([@bartocc](https://github.com/bartocc))\n\n#### :house: Internal\n* [#98](https://github.com/empress/guidemaker/pull/98) update and fix release-plan ([@mansona](https://github.com/mansona))\n* [#97](https://github.com/empress/guidemaker/pull/97) Setup release-plan ([@mansona](https://github.com/mansona))\n\n#### Committers: 2\n- Chris Manson ([@mansona](https://github.com/mansona))\n- Julien Palmas ([@bartocc](https://github.com/bartocc))\n"
+}
