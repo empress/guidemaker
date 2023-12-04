@@ -5,7 +5,7 @@ on:
       - main
       - master
   pull_request:
-    types: 
+    types:
       - labeled
 
 concurrency:
@@ -49,16 +49,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-      
+
       - run: npm ci
-      
+
       - name: "Generate Explanation and Prep Changelogs"
         id: explanation
         run: |
           set -x
-          
-          npx release-plan prepare
-          
+
+          npx release-plan prepare --singlePackage=guidemaker
+
           echo 'text<<EOF' >> $GITHUB_OUTPUT
           jq .description .release-plan.json -r >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
