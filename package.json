@@ -56,7 +56,6 @@
     "@embroider/test-setup": "^1.8.3",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
-    "@release-it-plugins/lerna-changelog": "^5.0.0",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "chai": "^4.2.0",
@@ -95,7 +94,7 @@
     "prettier": "^2.5.1",
     "qunit": "^2.17.2",
     "qunit-dom": "^1.6.0",
-    "release-it": "^15.5.0",
+    "release-plan": "^0.4.0",
     "webpack": "^5.74.0"
   },
   "engines": {
@@ -115,20 +114,5 @@
   },
   "fastbootDependencies": [
     "algoliasearch"
-  ],
-  "release-it": {
-    "plugins": {
-      "@release-it-plugins/lerna-changelog": {
-        "infile": "CHANGELOG.md",
-        "launchEditor": true
-      }
-    },
-    "git": {
-      "tagName": "v${version}"
-    },
-    "github": {
-      "release": true,
-      "tokenRef": "GITHUB_AUTH"
-    }
-  }
+  ]
 }
