@@ -102,7 +102,7 @@ export default class PageService extends Service {
   @computed('pages')
   get pageTree() {
     let { pages } = this;
-    return buildPageTreeNode(pages.toArray ? pages.toArray() : pages);
+    return buildPageTreeNode(pages.slice ? pages.slice() : pages);
   }
 
   @computed('content.id', 'pageTree')
