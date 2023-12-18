@@ -1,4 +1,13 @@
 # Guidemaker Changelog
+## Release (2023-12-18)
+
+guidemaker 3.3.1 (patch)
+
+#### :bug: Bug Fix
+* [#100](https://github.com/empress/guidemaker/pull/100) Fix `ember-data:deprecate-array-like` deprecation ([@bartocc](https://github.com/bartocc))
+
+#### Committers: 1
+- Julien Palmas ([@bartocc](https://github.com/bartocc))
 ## Release (2023-12-04)
 
 guidemaker 3.3.0 (minor)
