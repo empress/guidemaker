@@ -19,7 +19,7 @@ Compatibility
 
 * Ember.js v3.16 or above
 * Ember CLI v3.16 or above
-* Node.js v14 or above
+* Node.js v18 or above
 
 Super Quick Start
 ------------------------------------------------------------------------------
