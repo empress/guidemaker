@@ -17,33 +17,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: mansona/npm-lockfile-version@v1
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          cache: npm
-      - run: npm i -g npm@8
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run test:node
-      - run: npm run test:ember
-      - run: npm run build
+          cache: pnpm
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm run lint
+      - run: pnpm run test:node
+      - run: pnpm run test:ember
+      - run: pnpm run build
 
   floating-dependencies:
     name: Floating Dependencies
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          cache: npm
-      - run: npm i -g npm@8
-      - run: npm install --no-package-lock
-      - run: npm run test:ember
-      - run: npm run build
+          cache: pnpm
+      - run: pnpm install --no-lockfile
+      - run: pnpm run test:ember
+      - run: pnpm run build
 
   try-scenarios:
     name: "ember-try: ${{ matrix.ember-try-scenario }}"
@@ -66,17 +69,17 @@ jobs:
           - no-deprecations
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          cache: npm
-      - run: npm i -g npm@8
-      - run: npm ci
-
+      - run: pnpm i --frozen-lockfile
       - name: test
-        run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
-      - run: npm run build
+        run: pnpm ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
+      - run: pnpm run build
 
   allow-fail-try-scenarios:
     name: ${{ matrix.try-scenario }} - Allowed to fail
@@ -95,18 +98,18 @@ jobs:
           - ember-release-no-deprecations
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          cache: npm
-      - run: npm i -g npm@8
-      - run: npm ci
-
-      - run: npm run build
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm run build
       - name: test
         id: tests
-        run: node_modules/.bin/ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
+        run: pnpm ember try:one ${{ matrix.try-scenario }} --skip-cleanup
         continue-on-error: true
       - uses: mainmatter/continue-on-error-comment@v1
         with:

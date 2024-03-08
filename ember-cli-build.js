@@ -3,6 +3,24 @@
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
+const webpackConfig = {
+  module: {
+    rules: [
+      {
+        test: function (specifier) {
+          return !specifier.endsWith('.css') && !specifier.endsWith('.js');
+        },
+        issuer: function (issuer) {
+          if (issuer.endsWith('.css')) {
+            return true;
+          }
+        },
+        type: 'asset/resource',
+      },
+    ],
+  },
+};
+
 module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
     'ember-cli-uglify': {
@@ -11,7 +29,10 @@ module.exports = function (defaults) {
           collapse_vars: false
         }
       }
-    }
+    },
+    autoImport: {
+      webpack: webpackConfig,
+    },
   });
 
   /*
@@ -23,6 +44,9 @@ module.exports = function (defaults) {
 
   const { maybeEmbroider } = require('@embroider/test-setup');
   return maybeEmbroider(app, {
+    packagerOptions: {
+      webpackConfig,
+    },
     skipBabel: [
       {
         package: 'qunit',
