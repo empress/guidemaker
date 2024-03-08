@@ -38,7 +38,7 @@
     "ember-body-class": "^3.0.0",
     "ember-cli-babel": "^7.26.10",
     "ember-cli-htmlbars": "^5.7.2",
-    "ember-cli-showdown": "^6.0.1",
+    "ember-cli-showdown": "^9.0.0",
     "ember-get-config": "^2.1.1",
     "ember-meta": "^2.0.0",
     "ember-scroll": "^1.0.3",
