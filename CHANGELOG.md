@@ -1,4 +1,20 @@
 # Guidemaker Changelog
+
+## Release (2024-03-08)
+
+guidemaker 4.0.0 (major)
+
+#### :boom: Breaking Change
+* `guidemaker`
+  * [#91](https://github.com/empress/guidemaker/pull/91) update to v5.4 with ember-cli-update and drop support for Ember < 3.28 ([@mansona](https://github.com/mansona))
+  * [#103](https://github.com/empress/guidemaker/pull/103) drop support for node < 18 ([@mansona](https://github.com/mansona))
+
+#### :house: Internal
+* `guidemaker`
+  * [#102](https://github.com/empress/guidemaker/pull/102) swap to pnpm ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+- Chris Manson ([@mansona](https://github.com/mansona))
 ## Release (2023-12-18)
 
 guidemaker 3.3.1 (patch)
