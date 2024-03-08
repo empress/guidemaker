@@ -2,6 +2,17 @@
 
 ## Release (2024-03-08)
 
+guidemaker 4.0.1 (patch)
+
+#### :bug: Bug Fix
+* `guidemaker`
+  * [#105](https://github.com/empress/guidemaker/pull/105) fix the location of the shorten-version helper ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+- Chris Manson ([@mansona](https://github.com/mansona))
+
+## Release (2024-03-08)
+
 guidemaker 4.0.0 (major)
 
 #### :boom: Breaking Change
