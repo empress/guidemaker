@@ -1,4 +1,4 @@
-/* eslint-disable ember/no-get, getter-return, ember/no-computed-properties-in-native-classes */
+/* eslint-disable prettier/prettier, ember/no-get, getter-return, ember/no-computed-properties-in-native-classes */
 
 import Service, { inject as service } from '@ember/service';
 import { get, computed } from '@ember/object';

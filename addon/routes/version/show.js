@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { set } from '@ember/object';
