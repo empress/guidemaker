@@ -101,7 +101,8 @@
     "webpack": "^5.89.0"
   },
   "peerDependencies": {
-    "ember-source": ">= 3.28.0"
+    "ember-source": ">= 3.28.0",
+    "showdown": "^2.0.0"
   },
   "engines": {
     "node": ">= 18"
