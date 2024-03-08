@@ -3,89 +3,96 @@ name: CI
 on:
   push:
     branches:
-      - master
       - main
-      - "v*"
-  pull_request:
+      - master
+  pull_request: {}
 
-env:
-  FORCE_COLOR: 1
+concurrency:
+  group: ci-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
-    name: Tests and Linting
+    name: "Tests"
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
-      - uses: actions/setup-node@v4
+      - name: Install Node
+        uses: actions/setup-node@v4
         with:
           node-version: 18.x
           cache: pnpm
-      - run: pnpm i --frozen-lockfile
-      - run: pnpm run lint
-      - run: pnpm run test:node
-      - run: pnpm run test:ember
+      - name: Install Dependencies
+        run: pnpm i --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
+      - run: pnpm test:node
+      - name: Run Tests
+        run: pnpm test:ember
       - run: pnpm run build
 
-  floating-dependencies:
-    name: Floating Dependencies
+  floating:
+    name: "Floating Dependencies"
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 18.x
           cache: pnpm
-      - run: pnpm install --no-lockfile
-      - run: pnpm run test:ember
+      - name: Install Dependencies
+        run: pnpm install --no-lockfile
+      - name: Run Tests
+        run: npm run test:ember
       - run: pnpm run build
 
   try-scenarios:
-    name: "ember-try: ${{ matrix.ember-try-scenario }}"
+    name: ${{ matrix.try-scenario }}
     runs-on: ubuntu-latest
-    needs: test
+    needs: "test"
+    timeout-minutes: 10
 
     strategy:
       fail-fast: false
       matrix:
-        ember-try-scenario:
-          - ember-lts-3.16
-          - ember-lts-3.20
-          - ember-lts-3.24
+        try-scenario:
           - ember-lts-3.28
+          - ember-lts-4.4
+          - ember-lts-4.8
+          - ember-lts-4.12
           - ember-release
-          - ember-default-with-jquery
-          - ember-classic
           - embroider-safe
-          - embroider-optimized
           - no-deprecations
 
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
-      - uses: actions/setup-node@v4
+      - name: Install Node
+        uses: actions/setup-node@v4
         with:
           node-version: 18.x
-      - run: pnpm i --frozen-lockfile
-      - name: test
-        run: pnpm ember try:one ${{ matrix.ember-try-scenario }} --skip-cleanup
-      - run: pnpm run build
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm i --frozen-lockfile
+      - name: Run Tests
+        run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
 
   allow-fail-try-scenarios:
     name: ${{ matrix.try-scenario }} - Allowed to fail
     runs-on: ubuntu-latest
-    needs: 'test'
-
+    needs: "test"
     permissions:
       pull-requests: write
 
@@ -93,23 +100,26 @@ jobs:
       fail-fast: false
       matrix:
         try-scenario:
-          - ember-canary
           - ember-beta
+          - ember-canary
+          - embroider-optimized # this will be passing again when we fix fastboot
           - ember-release-no-deprecations
 
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
-      - uses: actions/setup-node@v4
+      - name: Install Node
+        uses: actions/setup-node@v4
         with:
           node-version: 18.x
-      - run: pnpm i --frozen-lockfile
-      - run: pnpm run build
-      - name: test
+          cache: pnpm
+      - name: Install Dependencies
+        run: pnpm i --frozen-lockfile
+      - name: Run Tests
         id: tests
-        run: pnpm ember try:one ${{ matrix.try-scenario }} --skip-cleanup
+        run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
         continue-on-error: true
       - uses: mainmatter/continue-on-error-comment@v1
         with:

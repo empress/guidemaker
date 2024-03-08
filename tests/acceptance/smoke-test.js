@@ -12,7 +12,7 @@ module('Acceptance | smoke', function (hooks) {
     let store = this.owner.lookup('service:store');
     let pages = store.peekAll('page');
 
-    for (let section of pages.toArray()) {
+    for (let section of pages) {
       for (let page of section?.pages ?? []) {
         await visit(`/release/${page.url}`);
       }
