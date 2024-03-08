@@ -34,6 +34,7 @@ jobs:
       - run: pnpm test:node
       - name: Run Tests
         run: pnpm test:ember
+      - run: pnpm run build
 
   floating:
     name: "Floating Dependencies"
