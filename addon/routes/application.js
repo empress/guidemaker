@@ -11,6 +11,7 @@ export default class ApplicationRoute extends Route {
           currentVersion: 'release',
         };
       }
+      throw err;
     });
   }
 }

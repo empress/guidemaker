@@ -115,7 +115,8 @@
   "ember-addon": {
     "configPath": "tests/dummy/config",
     "after": [
-      "ember-meta"
+      "ember-meta",
+      "ember-data"
     ]
   },
   "fastbootDependencies": [
