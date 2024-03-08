@@ -15,8 +15,8 @@ You do not need to be a web developer to be able to use this system. You just wr
 
 ## Compatibility
 
-* Ember.js v3.16 or above
-* Ember CLI v3.16 or above
+* Ember.js v3.28 or above
+* Ember CLI v3.28 or above
 * Node.js v18 or above
 
 Super Quick Start

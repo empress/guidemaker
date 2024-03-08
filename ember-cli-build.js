@@ -22,14 +22,7 @@ const webpackConfig = {
 };
 
 module.exports = function (defaults) {
-  let app = new EmberAddon(defaults, {
-    'ember-cli-uglify': {
-      uglify: {
-        compress: {
-          collapse_vars: false
-        }
-      }
-    },
+  const app = new EmberAddon(defaults, {
     autoImport: {
       webpack: webpackConfig,
     },
