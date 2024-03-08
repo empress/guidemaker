@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier, qunit/no-arrow-tests, ember/no-get */
+/* eslint-disable qunit/no-assert-equal, qunit/no-assert-equal-boolean, prettier/prettier, qunit/no-arrow-tests, ember/no-get */
 import { module, test } from 'qunit';
 import { get, set } from '@ember/object';
 
