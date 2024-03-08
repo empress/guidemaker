@@ -1,5 +1,4 @@
-guidemaker
-==============================================================================
+# guidemaker
 
 This project is designed to be a fully-functional, static site implementation of a documentation site and is built on EmberJS with fully working out of the box SEO friendly output. It supports being hosted on AWS S3 or any other static site hosting solution.
 
@@ -14,8 +13,7 @@ If you want an example of the this "in production" then check out the [Ember Gui
 
 You do not need to be a web developer to be able to use this system. You just write markdown files and the rest of the work is performed by the EmberJS build system.
 
-Compatibility
-------------------------------------------------------------------------------
+## Compatibility
 
 * Ember.js v3.16 or above
 * Ember CLI v3.16 or above
@@ -31,8 +29,7 @@ This will create a new repo in your GitHub account that has everything setup and
 
 If you want to instead work with your documentation site locally before deploying then you can continue reading
 
-Quick Start
-------------------------------------------------------------------------------
+## Quick Start
 
 ```sh
 # if you don't have ember-cli installed already
@@ -56,8 +53,7 @@ This will generate a fully static output of your site in the dist folder.
 
 If you want to see the system running on your local machine just run `npm start` and you will be able to navigate to http://localhost:4200 to see the documentation site in action.
 
-Configuration
-------------------------------------------------------------------------------
+## Configuration
 
 After you install Guidemaker using the instructions above, you will see that your `config/environment.js` file will have been edited to add a `guidemaker` config object. You should update this with the details relevant to your documentation.
 
@@ -94,13 +90,11 @@ guidemaker: {
 ```
 
 
-Contributing
-------------------------------------------------------------------------------
+## Contributing
 
 See the [Contributing](CONTRIBUTING.md) guide for details.
 
 
-License
-------------------------------------------------------------------------------
+## License
 
 This project is licensed under the [MIT License](LICENSE.md).
