@@ -373,7 +373,6 @@ packages:
       semver: 6.3.1
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/eslint-parser@7.23.10(@babel/core@7.23.7)(eslint@8.57.0):
     resolution: {integrity: sha512-3wSYDPZVnhseRnxRJH6ZVTNknBz76AEnyC+AYYhasjP3Yy23qz0ERR7Fcd2SHmYuSFJ2kY9gaaDd3vyqU09eSw==}
@@ -408,7 +407,7 @@ packages:
     resolution: {integrity: sha512-QkBXwGgaoC2GtGZRoma6kv7Szfv06khvhFav67ZExau2RaXzy8MpHSMO2PNoP2XtmQphJQRHFfg77Bq731Yizw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.23.6
+      '@babel/types': 7.24.0
 
   /@babel/helper-compilation-targets@7.23.6:
     resolution: {integrity: sha512-9JB548GZoQVmzrFgp8o7KxdgkTGm6xs9DW0o/Pim72UDjzr5ObUQ6ZzYPqA+g9OTS2bBQoctLJrky0RDCAWRgQ==}
@@ -551,7 +550,7 @@ packages:
     resolution: {integrity: sha512-wGjk9QZVzvknA6yKIUURb8zY3grXCcOZt+/7Wcy8O2uctxhplmUPkOdlgoNhmdVee2c92JXbf1xpMtVNbfoxRw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.23.6
+      '@babel/types': 7.24.0
 
   /@babel/helper-member-expression-to-functions@7.23.0:
     resolution: {integrity: sha512-6gfrPwh7OuT6gZyJZvd6WbTfrqAo7vm4xCzAXOusKqq/vWdKXphTpj5klHKNmRUU6/QRGlBsyU9mAIPaWHlqJA==}
@@ -590,7 +589,6 @@ packages:
       '@babel/helper-simple-access': 7.22.5
       '@babel/helper-split-export-declaration': 7.22.6
       '@babel/helper-validator-identifier': 7.22.20
-    dev: true
 
   /@babel/helper-optimise-call-expression@7.22.5:
     resolution: {integrity: sha512-HBwaojN0xFRx4yIvpwGqxiV2tUfl7401jlok564NgB9EHS1y6QT17FmKWm4ztqjeVdXLuC4fSvHc5ePpQjoTbw==}
@@ -652,7 +650,7 @@ packages:
     resolution: {integrity: sha512-n0H99E/K+Bika3++WNL17POvo4rKWZ7lZEp1Q+fStVbUi8nxPQEBOlTmCOxW/0JsS56SKKQ+ojAe2pHKJHN35w==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/types': 7.23.6
+      '@babel/types': 7.24.0
 
   /@babel/helper-skip-transparent-expression-wrappers@7.22.5:
     resolution: {integrity: sha512-tK14r66JZKiC43p8Ki33yLBVJKlQDFoA8GYN67lWCDCqoL6EMMSuM9b+Iff2jHaM/RRFYl7K+iiru7hbRqNx8Q==}
@@ -683,8 +681,8 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/helper-function-name': 7.23.0
-      '@babel/template': 7.22.15
-      '@babel/types': 7.23.6
+      '@babel/template': 7.24.0
+      '@babel/types': 7.24.0
 
   /@babel/helpers@7.23.8:
     resolution: {integrity: sha512-KDqYz4PiOWvDFrdHLPhKtCThtIcKVy6avWD2oG4GEvyQ+XDZwHD4YQd+H2vNMnq2rkdxsDkU82T+Vk8U/WXHRQ==}
@@ -705,7 +703,6 @@ packages:
       '@babel/types': 7.24.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/highlight@7.23.4:
     resolution: {integrity: sha512-acGdbYSfp2WheJoJm/EBBBLh/ID8KDc64ISZ9DYtBmC8/Q204PZJLHyzeB5qMzJ5trcOkybd78M4x2KWsUq++A==}
@@ -728,7 +725,6 @@ packages:
     hasBin: true
     dependencies:
       '@babel/types': 7.24.0
-    dev: true
 
   /@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@7.23.3(@babel/core@7.23.7):
     resolution: {integrity: sha512-iRkKcCqb7iGnq9+3G6rZ+Ciz5VywC4XNRHe57lKM+jOeYAoR0lVqdeeDRfh0tQcTfw/+vBhHn926FmQhLtlFLQ==}
@@ -1454,7 +1450,7 @@ packages:
     dependencies:
       '@babel/core': 7.23.7
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/template': 7.22.15
+      '@babel/template': 7.24.0
 
   /@babel/plugin-transform-computed-properties@7.23.3(@babel/core@7.24.0):
     resolution: {integrity: sha512-dTj83UVTLw/+nbiHqQSFdwO9CbTtwq1DsDqm3CUEtDrZNET5rT5E6bIdTlOftDTDLMYxvxHNEYO4B9SLl8SLZw==}
@@ -1464,7 +1460,7 @@ packages:
     dependencies:
       '@babel/core': 7.24.0
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/template': 7.22.15
+      '@babel/template': 7.24.0
     dev: true
 
   /@babel/plugin-transform-destructuring@7.23.3(@babel/core@7.23.7):
@@ -2553,7 +2549,7 @@ packages:
     dependencies:
       '@babel/core': 7.23.7
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/types': 7.23.6
+      '@babel/types': 7.24.0
       esutils: 2.0.3
 
   /@babel/preset-modules@0.1.6-no-external-plugins(@babel/core@7.24.0):
@@ -2563,7 +2559,7 @@ packages:
     dependencies:
       '@babel/core': 7.24.0
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/types': 7.23.6
+      '@babel/types': 7.24.0
       esutils: 2.0.3
     dev: true
 
@@ -2603,7 +2599,6 @@ packages:
       '@babel/code-frame': 7.23.5
       '@babel/parser': 7.24.0
       '@babel/types': 7.24.0
-    dev: true
 
   /@babel/traverse@7.23.7:
     resolution: {integrity: sha512-tY3mM8rH9jM0YHFGyfC0/xf+SB5eKUu7HPj7/k3fpi9dAlsMc5YbQvDi0Sh2QTPXqMhyaAtzAr807TIyfQrmyg==}
@@ -2638,7 +2633,6 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/types@7.23.6:
     resolution: {integrity: sha512-+uarb83brBzPKN38NX1MkB6vb6+mwvR6amUulqAE7ccQw1pEl+bCia9TbdG1lsnFP7lZySvUn37CHyXQdfTwzg==}
@@ -2655,7 +2649,6 @@ packages:
       '@babel/helper-string-parser': 7.23.4
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
-    dev: true
 
   /@cnakazawa/watch@1.0.4:
     resolution: {integrity: sha512-v9kIhKwjeZThiWrLmj0y17CWoyddASLj9O2yvbZkbvw/N3rWOYy9zkV66ursAoVr0mV15bL8g0c4QZUE6cdDoQ==}
@@ -3090,7 +3083,7 @@ packages:
       '@glint/template':
         optional: true
     dependencies:
-      '@embroider/macros': 1.13.4(@glint/template@1.3.0)
+      '@embroider/macros': 1.15.0(@glint/template@1.3.0)
       '@glint/template': 1.3.0
       ember-cli-babel: 7.26.11
       ember-modifier-manager-polyfill: 1.2.0(@babel/core@7.23.7)
@@ -3110,7 +3103,7 @@ packages:
       '@glint/template':
         optional: true
     dependencies:
-      '@embroider/macros': 1.13.4(@glint/template@1.3.0)
+      '@embroider/macros': 1.15.0(@glint/template@1.3.0)
       '@glint/template': 1.3.0
       ember-cli-babel: 7.26.11
       ember-modifier-manager-polyfill: 1.2.0(@babel/core@7.24.0)
@@ -3305,7 +3298,7 @@ packages:
       '@glint/template':
         optional: true
     dependencies:
-      '@embroider/macros': 1.13.4(@glint/template@1.3.0)
+      '@embroider/macros': 1.15.0(@glint/template@1.3.0)
       '@glint/template': 1.3.0
       broccoli-funnel: 3.0.8
       ember-cli-babel: 7.26.11
@@ -7609,7 +7602,7 @@ packages:
     peerDependencies:
       ember-source: ^3.28.0 || ^4.0.0 || >=5.0.0
     dependencies:
-      '@embroider/macros': 1.13.4(@glint/template@1.3.0)
+      '@embroider/macros': 1.15.0(@glint/template@1.3.0)
       '@embroider/util': 1.12.1(@glint/template@1.3.0)(ember-source@5.4.1)
       '@glimmer/component': 1.1.2(@babel/core@7.23.7)
       '@glimmer/tracking': 1.1.2
@@ -8360,7 +8353,7 @@ packages:
     engines: {node: 10.* || 12.* || 14.* || >= 16}
     dependencies:
       '@babel/helper-plugin-utils': 7.22.5
-      '@babel/types': 7.23.6
+      '@babel/types': 7.24.0
       '@glimmer/tracking': 1.1.2
       ember-cli-babel: 7.26.11
       ember-cli-babel-plugin-helpers: 1.1.1
@@ -9946,8 +9939,8 @@ packages:
     resolution: {integrity: sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==}
     dev: true
 
-  /follow-redirects@1.15.5:
-    resolution: {integrity: sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==}
+  /follow-redirects@1.15.6:
+    resolution: {integrity: sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -10490,7 +10483,7 @@ packages:
       ember-root-url: 1.0.1
       ember-route-template: 1.0.3
       ember-showdown-prism: 4.4.0(@babel/core@7.23.7)(@glint/template@1.3.0)(ember-source@5.4.1)(showdown@2.1.0)(webpack@5.90.0)
-      ember-tether: github.com/mansona/ember-tether/6ff38253f736ce894b67a27db300d9dfb0aa05c7(@glint/template@1.3.0)(ember-source@5.4.1)(webpack@5.90.0)
+      ember-tether: git@github.com+mansona/ember-tether/2350880b88a684606ebb09ca22f9be77f26e8cae(@glint/template@1.3.0)(ember-source@5.4.1)(webpack@5.90.0)
     transitivePeerDependencies:
       - '@babel/core'
       - '@glimmer/tracking'
@@ -10774,7 +10767,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.5
+      follow-redirects: 1.15.6
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -15963,7 +15956,7 @@ packages:
   /workerpool@3.1.2:
     resolution: {integrity: sha512-WJFA0dGqIK7qj7xPTqciWBH5DlJQzoPjsANvc3Y4hNB0SScT+Emjvt0jPPkDBUjBNngX1q9hHgt1Gfwytu6pug==}
     dependencies:
-      '@babel/core': 7.23.7
+      '@babel/core': 7.24.0
       object-assign: 4.1.1
       rsvp: 4.8.5
     transitivePeerDependencies:
@@ -16211,9 +16204,9 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  github.com/mansona/ember-tether/6ff38253f736ce894b67a27db300d9dfb0aa05c7(@glint/template@1.3.0)(ember-source@5.4.1)(webpack@5.90.0):
-    resolution: {tarball: https://codeload.github.com/mansona/ember-tether/tar.gz/6ff38253f736ce894b67a27db300d9dfb0aa05c7}
-    id: github.com/mansona/ember-tether/6ff38253f736ce894b67a27db300d9dfb0aa05c7
+  git@github.com+mansona/ember-tether/2350880b88a684606ebb09ca22f9be77f26e8cae(@glint/template@1.3.0)(ember-source@5.4.1)(webpack@5.90.0):
+    resolution: {commit: 2350880b88a684606ebb09ca22f9be77f26e8cae, repo: git@github.com:mansona/ember-tether.git, type: git}
+    id: git@github.com+mansona/ember-tether/2350880b88a684606ebb09ca22f9be77f26e8cae
     name: ember-tether
     version: 3.0.0
     engines: {node: '>= 14'}
