@@ -1,5 +1,21 @@
 # Guidemaker Changelog
 
+## Release (2024-05-03)
+
+guidemaker 4.0.2 (patch)
+
+#### :bug: Bug Fix
+* `guidemaker`
+  * [#109](https://github.com/empress/guidemaker/pull/109) remove ember-data transform re-exports ([@mansona](https://github.com/mansona))
+
+#### :house: Internal
+* `guidemaker`
+  * [#112](https://github.com/empress/guidemaker/pull/112) update to v5.8 with ember-cli-update ([@mansona](https://github.com/mansona))
+  * [#110](https://github.com/empress/guidemaker/pull/110) add ember-data to ember-try scenarios ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+- Chris Manson ([@mansona](https://github.com/mansona))
+
 ## Release (2024-03-08)
 
 guidemaker 4.0.1 (patch)
