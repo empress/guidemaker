@@ -72,7 +72,7 @@ jobs:
           - ember-lts-4.12
           - ember-release
           - embroider-safe
-          - no-deprecations
+          - embroider-optimized
 
     steps:
       - uses: actions/checkout@v4
@@ -102,7 +102,7 @@ jobs:
         try-scenario:
           - ember-beta
           - ember-canary
-          - embroider-optimized # this will be passing again when we fix fastboot
+          - no-deprecations # this is to save from Ember data deprecations that we can't support from 3.28 through to 5.x
           - ember-release-no-deprecations
 
     steps:
