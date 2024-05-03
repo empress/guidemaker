@@ -12,6 +12,11 @@ module('Acceptance | smoke', function (hooks) {
     let store = this.owner.lookup('service:store');
     let pages = store.peekAll('page');
 
+    // cater for older ember-data versions
+    if (pages.toArray) {
+      pages = pages.toArray();
+    }
+
     for (let section of pages) {
       for (let page of section?.pages ?? []) {
         await visit(`/release/${page.url}`);
