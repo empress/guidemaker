@@ -102,18 +102,15 @@ module.exports = {
       return;
     }
 
-    let versionsFile;
-
     if (existsSync(`${guidesSrcPkg}/versions.yml`)) {
       // eslint-disable-next-line no-console
-      console.warn(`Defining your 'versions.yml' file in the root folder is now deprecated.
+      throw new Error(`Defining your 'versions.yml' file in the root folder was deprecated in the last major version.
 
 You should move it into the 'guides' folder.
 `);
-      versionsFile = `${guidesSrcPkg}/versions.yml`;
-    } else {
-      versionsFile = `${guidesSrcPkg}/guides/versions.yml`;
     }
+
+    const versionsFile = `${guidesSrcPkg}/guides/versions.yml`;
 
     return yaml.safeLoad(readFileSync(versionsFile, 'utf8'));
   },
