@@ -1,5 +1,17 @@
 # Guidemaker Changelog
 
+## Release (2024-06-25)
+
+guidemaker 4.0.3 (patch)
+
+#### :bug: Bug Fix
+* `guidemaker`
+  * [#114](https://github.com/empress/guidemaker/pull/114) fix version dropdown and add a test ([@mansona](https://github.com/mansona))
+  * [#115](https://github.com/empress/guidemaker/pull/115) fix ember-data dependencies ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+- Chris Manson ([@mansona](https://github.com/mansona))
+
 ## Release (2024-05-03)
 
 guidemaker 4.0.2 (patch)
