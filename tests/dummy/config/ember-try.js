@@ -13,6 +13,9 @@ module.exports = async function () {
           devDependencies: {
             'ember-source': '~3.28.0',
             'ember-data': '~3.28.0',
+            '@ember-data/adapter': '~3.28.0',
+            '@ember-data/model': '~3.28.0',
+            '@ember-data/serializer': '~3.28.0',
             'ember-cli': '~4.12.0',
           },
         },
@@ -23,6 +26,9 @@ module.exports = async function () {
           devDependencies: {
             'ember-source': '~4.4.0',
             'ember-data': '~4.4.0',
+            '@ember-data/adapter': '~4.4.0',
+            '@ember-data/model': '~4.4.0',
+            '@ember-data/serializer': '~4.4.0',
           },
         },
       },
@@ -32,6 +38,9 @@ module.exports = async function () {
           devDependencies: {
             'ember-source': '~4.8.0',
             'ember-data': '~4.8.0',
+            '@ember-data/adapter': '~4.8.0',
+            '@ember-data/model': '~4.8.0',
+            '@ember-data/serializer': '~4.8.0',
           },
         },
       },
@@ -41,6 +50,9 @@ module.exports = async function () {
           devDependencies: {
             'ember-source': '~4.12.0',
             'ember-data': '~4.12.0',
+            '@ember-data/adapter': '~4.12.0',
+            '@ember-data/model': '~4.12.0',
+            '@ember-data/serializer': '~4.12.0',
           },
         },
       },
