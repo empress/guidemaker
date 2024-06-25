@@ -2,20 +2,16 @@
   "solution": {
     "guidemaker": {
       "impact": "patch",
-      "oldVersion": "4.0.1",
-      "newVersion": "4.0.2",
+      "oldVersion": "4.0.2",
+      "newVersion": "4.0.3",
       "constraints": [
         {
           "impact": "patch",
           "reason": "Appears in changelog section :bug: Bug Fix"
-        },
-        {
-          "impact": "patch",
-          "reason": "Appears in changelog section :house: Internal"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2024-05-03)\n\nguidemaker 4.0.2 (patch)\n\n#### :bug: Bug Fix\n* `guidemaker`\n  * [#109](https://github.com/empress/guidemaker/pull/109) remove ember-data transform re-exports ([@mansona](https://github.com/mansona))\n\n#### :house: Internal\n* `guidemaker`\n  * [#112](https://github.com/empress/guidemaker/pull/112) update to v5.8 with ember-cli-update ([@mansona](https://github.com/mansona))\n  * [#110](https://github.com/empress/guidemaker/pull/110) add ember-data to ember-try scenarios ([@mansona](https://github.com/mansona))\n\n#### Committers: 1\n- Chris Manson ([@mansona](https://github.com/mansona))\n"
+  "description": "## Release (2024-06-25)\n\nguidemaker 4.0.3 (patch)\n\n#### :bug: Bug Fix\n* `guidemaker`\n  * [#114](https://github.com/empress/guidemaker/pull/114) fix version dropdown and add a test ([@mansona](https://github.com/mansona))\n  * [#115](https://github.com/empress/guidemaker/pull/115) fix ember-data dependencies ([@mansona](https://github.com/mansona))\n\n#### Committers: 1\n- Chris Manson ([@mansona](https://github.com/mansona))\n"
 }
