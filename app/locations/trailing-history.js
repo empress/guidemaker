@@ -4,11 +4,12 @@ import HistoryLocation from '@ember/routing/history-location';
 export default HistoryLocation.extend({
   formatURL() {
     let url = this._super(...arguments);
-
-    if (url.includes('#')) {
-      return url.replace(/([^/])#(.*)/, '$1/#$2');
-    } else {
-      return url.replace(/\/?$/, '/');
-    }
-  }
+    return formatURL(url);
+  },
 });
+
+export function formatURL(url) {
+  let modifiedURL = new URL(url, 'http://example.com');
+  modifiedURL.pathname += '/';
+  return `${modifiedURL.pathname}${modifiedURL.search}${modifiedURL.hash}`;
+}
