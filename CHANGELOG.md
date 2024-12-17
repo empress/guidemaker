@@ -1,5 +1,16 @@
 # Guidemaker Changelog
 
+## Release (2024-12-17)
+
+guidemaker 4.0.4 (patch)
+
+#### :bug: Bug Fix
+* `guidemaker`
+  * [#117](https://github.com/empress/guidemaker/pull/117) Add support for query params to the TrailingHistory location ([@kategengler](https://github.com/kategengler))
+
+#### Committers: 1
+- Katie Gengler ([@kategengler](https://github.com/kategengler))
+
 ## Release (2024-06-25)
 
 guidemaker 4.0.3 (patch)
