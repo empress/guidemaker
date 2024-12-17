@@ -13,6 +13,10 @@ module('Unit | Locations | trailing history', function (hooks) {
     assert.deepEqual(formatURL('/foo#placeholder'), '/foo/#placeholder');
   });
 
+  test('does not add double slashes', function (assert) {
+    assert.deepEqual(formatURL('/foo/'), '/foo/');
+  });
+
   test('supports query params and anchors', function (assert) {
     assert.deepEqual(
       formatURL('/foo?bar=baz#placeholder'),
