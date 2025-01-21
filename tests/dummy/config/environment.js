@@ -22,8 +22,9 @@ module.exports = function (environment) {
     },
 
     guidemaker: {
+      anyConfig: 'Define any config specifics to your Guidemaker Docs',
       description: 'Guides - Built with Guidemaker',
-      title: 'Guidemaker Docs'
+      title: 'Guidemaker Docs',
     }
   };
 
