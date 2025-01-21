@@ -108,7 +108,13 @@
     "@ember-data/model": "*",
     "@ember-data/serializer": "*",
     "ember-source": ">= 3.28.0",
-    "showdown": "^2.0.0"
+    "showdown": "^2.0.0",
+    "@ember/test-helpers": "^2.0.0 | ^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@ember/test-helpers": {
+      "optional": true
+    }
   },
   "engines": {
     "node": ">= 18"
