@@ -16,6 +16,7 @@
   },
   "scripts": {
     "build": "ember build --environment=production",
+    "ember-compatibility-tests": "ember try:each",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
@@ -25,8 +26,7 @@
     "start": "ember serve",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test",
-    "test:node": "mocha node-tests",
-    "ember-compatibility-tests": "ember try:each"
+    "test:node": "mocha node-tests"
   },
   "dependencies": {
     "@babel/core": "^7.24.4",
@@ -97,7 +97,7 @@
     "prettier": "^3.2.5",
     "qunit": "^2.20.1",
     "qunit-dom": "^2.0.0",
-    "release-plan": "^0.8.0",
+    "release-plan": "^0.17.0",
     "stylelint": "^15.11.0",
     "stylelint-config-standard": "^34.0.0",
     "stylelint-prettier": "^4.1.0",
@@ -109,6 +109,7 @@
     "@ember-data/serializer": "*",
     "showdown": "^2.0.0"
   },
+  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a",
   "engines": {
     "node": ">= 18"
   },
@@ -128,6 +129,5 @@
   "fastbootDependencies": [
     "algoliasearch",
     "crypto"
-  ],
-  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a"
+  ]
 }
