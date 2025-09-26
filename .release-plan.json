@@ -2,16 +2,21 @@
   "solution": {
     "guidemaker": {
       "impact": "patch",
-      "oldVersion": "4.0.4",
-      "newVersion": "4.0.5",
+      "oldVersion": "4.0.5",
+      "newVersion": "4.0.6",
+      "tagName": "latest",
       "constraints": [
         {
           "impact": "patch",
           "reason": "Appears in changelog section :bug: Bug Fix"
+        },
+        {
+          "impact": "patch",
+          "reason": "Appears in changelog section :house: Internal"
         }
       ],
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2025-09-26)\n\nguidemaker 4.0.5 (patch)\n\n#### :bug: Bug Fix\n* `guidemaker`\n  * [#119](https://github.com/empress/guidemaker/pull/119) remove ember-source from peer dependencies ([@mansona](https://github.com/mansona))\n\n#### Committers: 1\n- Chris Manson ([@mansona](https://github.com/mansona))\n"
+  "description": "## Release (2025-09-26)\n\n* guidemaker 4.0.6 (patch)\n\n#### :bug: Bug Fix\n* `guidemaker`\n  * [#121](https://github.com/empress/guidemaker/pull/121) update ember-cli-showdown ([@mansona](https://github.com/mansona))\n\n#### :house: Internal\n* `guidemaker`\n  * [#123](https://github.com/empress/guidemaker/pull/123) update release-plan ([@mansona](https://github.com/mansona))\n\n#### Committers: 1\n- Chris Manson ([@mansona](https://github.com/mansona))\n"
 }
