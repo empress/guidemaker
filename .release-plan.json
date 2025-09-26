@@ -2,8 +2,8 @@
   "solution": {
     "guidemaker": {
       "impact": "patch",
-      "oldVersion": "4.0.3",
-      "newVersion": "4.0.4",
+      "oldVersion": "4.0.4",
+      "newVersion": "4.0.5",
       "constraints": [
         {
           "impact": "patch",
@@ -13,5 +13,5 @@
       "pkgJSONPath": "./package.json"
     }
   },
-  "description": "## Release (2024-12-17)\n\nguidemaker 4.0.4 (patch)\n\n#### :bug: Bug Fix\n* `guidemaker`\n  * [#117](https://github.com/empress/guidemaker/pull/117) Add support for query params to the TrailingHistory location ([@kategengler](https://github.com/kategengler))\n\n#### Committers: 1\n- Katie Gengler ([@kategengler](https://github.com/kategengler))\n"
+  "description": "## Release (2025-09-26)\n\nguidemaker 4.0.5 (patch)\n\n#### :bug: Bug Fix\n* `guidemaker`\n  * [#119](https://github.com/empress/guidemaker/pull/119) remove ember-source from peer dependencies ([@mansona](https://github.com/mansona))\n\n#### Committers: 1\n- Chris Manson ([@mansona](https://github.com/mansona))\n"
 }

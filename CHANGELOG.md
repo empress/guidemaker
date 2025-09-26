@@ -1,5 +1,16 @@
 # Guidemaker Changelog
 
+## Release (2025-09-26)
+
+guidemaker 4.0.5 (patch)
+
+#### :bug: Bug Fix
+* `guidemaker`
+  * [#119](https://github.com/empress/guidemaker/pull/119) remove ember-source from peer dependencies ([@mansona](https://github.com/mansona))
+
+#### Committers: 1
+- Chris Manson ([@mansona](https://github.com/mansona))
+
 ## Release (2024-12-17)
 
 guidemaker 4.0.4 (patch)
