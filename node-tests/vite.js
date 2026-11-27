@@ -2,7 +2,7 @@
 const { expect } = require('chai');
 const { join } = require('path');
 
-const root = join(__dirname, '../tests/dummy');
+const root = join(__dirname, '../test-app');
 
 describe('guidemaker/vite.mjs', function () {
   let vite;

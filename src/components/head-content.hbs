@@ -1,0 +1,99 @@
+{{! Rendered into <head> by ember-cli-head's <HeadLayout />. }}
+{{#if this.model.title}}
+  <title>{{this.model.title}}</title>
+{{/if}}
+
+{{#if this.model.description}}
+  <meta name="description" content={{this.model.description}} />
+{{/if}}
+
+<meta name="referrer" content="unsafe-url" />
+
+{{#if this.model.canonical}}
+  <link rel="canonical" href={{this.model.canonical}} />
+{{else if this.model.url}}
+  <link rel="canonical" href={{this.model.url}} />
+{{/if}}
+
+{{#if this.model.date}}
+  <meta property="article:published_time" content={{this.model.date}} />
+{{/if}}
+
+{{#each this.model.tags as |tag|}}
+  <meta property="article:tag" content={{tag}} />
+{{/each}}
+
+{{#if this.model.siteName}}
+  <meta property="og:site_name" content={{this.model.siteName}} />
+{{/if}}
+
+{{#if this.model.articleTitle}}
+  <meta property="og:title" content={{this.model.articleTitle}} />
+{{else if this.model.title}}
+  <meta property="og:title" content={{this.model.title}} />
+{{/if}}
+
+{{#if this.model.url}}
+  <meta property="og:url" content={{this.model.url}} />
+{{/if}}
+
+{{#if this.model.description}}
+  <meta property="og:description" content={{this.model.description}} />
+{{/if}}
+
+{{#if this.model.type}}
+  <meta property="og:type" content={{this.model.type}} />
+{{/if}}
+
+{{#if this.model.imgSrc}}
+  <meta property="og:image" content={{this.model.imgSrc}} />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="256" />
+  <meta property="og:image:height" content="256" />
+{{/if}}
+
+<meta name="twitter:card" content="summary" />
+
+{{#if this.model.twitterUsername}}
+  <meta name="twitter:site" content={{this.model.twitterUsername}} />
+  <meta name="twitter:creator" content={{this.model.twitterUsername}} />
+{{/if}}
+
+{{#if this.model.imgSrc}}
+  <meta name="twitter:image" content={{this.model.imgSrc}} />
+{{/if}}
+
+{{#if this.model.articleTitle}}
+  <meta name="twitter:title" content={{this.model.articleTitle}} />
+{{else if this.model.title}}
+  <meta name="twitter:title" content={{this.model.title}} />
+{{/if}}
+
+{{#if this.model.url}}
+  <meta name="twitter:url" content={{this.model.url}} />
+{{/if}}
+
+{{#if this.model.description}}
+  <meta name="twitter:description" content={{this.model.description}} />
+{{/if}}
+
+{{#if this.model.author}}
+  <meta name="twitter:label1" content="Written by" />
+  {{#if this.model.author.name}}
+    <meta name="twitter:data1" content={{this.model.author.name}} />
+  {{else}}
+    <meta name="twitter:data1" content={{this.model.author}} />
+  {{/if}}
+{{/if}}
+
+{{#if this.model.keywords}}
+  <meta name="twitter:label2" content="Filed under" />
+  <meta name="twitter:data2" content={{this.model.keywords}} />
+{{/if}}
+
+{{#if this.model.jsonld}}
+  {{! template-lint-disable no-forbidden-elements }}
+  <script type="application/ld+json">
+    {{this.model.jsonld}}
+  </script>
+{{/if}}
