@@ -49,6 +49,14 @@ module.exports = {
       extends: ['plugin:n/recommended'],
     },
     {
+      files: ['./vite.mjs'],
+      env: {
+        browser: false,
+        node: true,
+      },
+      extends: ['plugin:n/recommended'],
+    },
+    {
       // test files
       files: ['tests/**/*-test.{js,ts}'],
       extends: ['plugin:qunit/recommended'],
