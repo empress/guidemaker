@@ -13,13 +13,19 @@
 
 ## Running tests
 
-* `pnpm test` – Runs the test suite on the current Ember version
-* `pnpm test:ember --server` – Runs the test suite in "watch mode"
-* `pnpm test:ember-compatibility` – Runs the test suite against multiple Ember versions
+* `pnpm test` – Runs the node tests of `vite.mjs`, builds the addon, and runs the tests of `test-app` in Chrome
+* `pnpm test:node` – Runs only the node tests
+* `pnpm test:ember` – Builds the addon, and runs only the tests of `test-app`
 
-## Running the dummy application
+The test app has a copy of the addon (pnpm `injectWorkspacePackages`). `pnpm test:ember` runs `pnpm install` after the build to refresh the copy.
 
-* `pnpm start`
-* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
+To run the tests on other Ember versions, apply a scenario of `test-app/.try.mjs`:
 
-For more information on using ember-cli, visit [https://cli.emberjs.com/release/](https://cli.emberjs.com/release/).
+* `cd test-app && pnpm dlx @embroider/try apply ember-lts-5.12`
+* `cd .. && pnpm install --no-lockfile && pnpm test:ember`
+
+## Running the test application
+
+* `pnpm build && pnpm install`
+* `pnpm --filter test-app start`
+* Visit the test application at the url that Vite prints.

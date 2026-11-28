@@ -1,0 +1,13 @@
+packages:
+  - test-app
+
+# The test app gets a copy of guidemaker whose peers (ember-data, showdown)
+# are the app's own. `pnpm install` refreshes the copy after a build.
+injectWorkspacePackages: true
+
+# guidemaker-default-template asks for ember-power-select 7, whose
+# ember-basic-dropdown 7 reads the config through ember-get-config, which
+# needs the AMD loader of classic builds.
+overrides:
+  ember-basic-dropdown: ^8.11.1
+  ember-power-select: ^8.12.2

@@ -6,3 +6,4 @@
 
 # addons
 /.node_modules.ember-try/
+/test-app/dist/

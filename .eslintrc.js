@@ -32,12 +32,13 @@ module.exports = {
         './.prettierrc.js',
         './.stylelintrc.js',
         './.template-lintrc.js',
-        './ember-cli-build.js',
-        './index.js',
-        './testem.js',
+        './addon-main.cjs',
+        './babel.publish.config.cjs',
         './blueprints/*/index.js',
-        './config/**/*.js',
-        './tests/dummy/config/**/*.js',
+        './test-app/babel.config.cjs',
+        './test-app/config/**/*.js',
+        './test-app/ember-cli-build.js',
+        './test-app/testem.cjs',
       ],
       parserOptions: {
         sourceType: 'script',
@@ -49,8 +50,21 @@ module.exports = {
       extends: ['plugin:n/recommended'],
     },
     {
+      files: [
+        './vite.mjs',
+        './rollup.config.mjs',
+        './test-app/.try.mjs',
+        './test-app/vite.config.mjs',
+      ],
+      env: {
+        browser: false,
+        node: true,
+      },
+      extends: ['plugin:n/recommended'],
+    },
+    {
       // test files
-      files: ['tests/**/*-test.{js,ts}'],
+      files: ['test-app/tests/**/*-test.{js,ts}'],
       extends: ['plugin:qunit/recommended'],
     },
     // node tests
