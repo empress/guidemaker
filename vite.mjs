@@ -1,6 +1,14 @@
-import { existsSync, readFileSync, statSync } from "node:fs";
+import { createHash } from "node:crypto";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  renameSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
 import { createRequire } from "node:module";
-import { extname, join, resolve } from "node:path";
+import { dirname, extname, join, resolve } from "node:path";
 
 import compareVersions from "compare-versions";
 import h2p from "html2plaintext";
@@ -21,6 +29,8 @@ const { Serializer } = jsonapi;
  * @property {string} [source] a package or folder with a `guides` folder, by default the app
  * @property {object} [showdown] the showdown options, by default `showdown` of the app's config/environment.js
  * @property {string | ((version: string) => boolean)} [premberVersionFilter] the versions whose pages {@link urls} lists
+ * @property {string | false} [cacheDir] the folder that keeps the JSON of each page between builds,
+ * by default `guidemaker` in the Vite cache folder. `false` turns the cache off.
  */
 
 const VersionsSerializer = new Serializer("version", {
@@ -264,6 +274,54 @@ function contentFolders(source) {
 }
 
 /**
+ * The page JSON depends on this file, the showdown version and the showdown options,
+ * so a change to one of them starts a new cache.
+ *
+ * @param {object} converterOptions
+ * @returns {string}
+ */
+function cacheSalt(converterOptions) {
+  return createHash("sha256")
+    .update(readFileSync(new URL(import.meta.url)))
+    .update(require("showdown/package.json").version)
+    .update(JSON.stringify(converterOptions))
+    .digest("hex");
+}
+
+/**
+ * Converts a markdown file only when the cache has no JSON for its text.
+ * The markdown conversion is most of the build time of a large guides site.
+ *
+ * @param {string} cacheDir
+ * @param {string} salt from {@link cacheSalt}
+ * @param {string} markdownFile
+ * @param {string} relativePath
+ * @param {showdown.Converter} converter
+ * @returns {string}
+ */
+function cachedPageJson(cacheDir, salt, markdownFile, relativePath, converter) {
+  let key = createHash("sha256")
+    .update(salt)
+    .update(relativePath)
+    .update(readFileSync(markdownFile))
+    .digest("hex");
+  let file = join(cacheDir, key.slice(0, 2), `${key}.json`);
+
+  if (existsSync(file)) return readFileSync(file, "utf8");
+
+  let json = pageJson(markdownFile, relativePath, converter);
+
+  /**
+   * A build that stops halfway leaves no partial file, because the rename is atomic.
+   */
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(`${file}.${process.pid}`, json);
+  renameSync(`${file}.${process.pid}`, file);
+
+  return json;
+}
+
+/**
  * Every file that the content folder of the app has, by its path in the build.
  *
  * @param {GuidemakerOptions} options
@@ -271,7 +329,10 @@ function contentFolders(source) {
  */
 export function contentFiles(options = {}) {
   let source = guidesRoot(options);
-  let converter = new showdown.Converter(showdownOptions(options));
+  let converterOptions = showdownOptions(options);
+  let converter = new showdown.Converter(converterOptions);
+  let cacheDir = options.cacheDir;
+  let salt = cacheDir ? cacheSalt(converterOptions) : "";
   let versions = versionsOf(source);
   /** @type {Map<string, () => string>} */
   let files = new Map();
@@ -283,7 +344,9 @@ export function contentFiles(options = {}) {
       if (/\.(md|markdown)$/.test(path)) {
         files.set(
           `${contentFolder}/${path.replace(/\.(md|markdown)$/, "")}.json`,
-          () => pageJson(file, path, converter),
+          cacheDir
+            ? () => cachedPageJson(cacheDir, salt, file, path, converter)
+            : () => pageJson(file, path, converter),
         );
       } else if (TOC_FILES.test(path)) {
         files.set(
@@ -457,7 +520,11 @@ export function guidemaker(options = {}) {
     name: "guidemaker",
 
     configResolved(config) {
-      resolved = { root: config.root, ...options };
+      resolved = {
+        root: config.root,
+        cacheDir: join(config.cacheDir, "guidemaker"),
+        ...options,
+      };
     },
 
     configureServer(server) {

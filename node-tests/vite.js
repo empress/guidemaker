@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
 const { expect } = require('chai');
+const { mkdtempSync, readdirSync, rmSync, writeFileSync } = require('fs');
+const { tmpdir } = require('os');
 const { join } = require('path');
 
 const root = join(__dirname, '../test-app');
@@ -58,5 +60,39 @@ describe('guidemaker/vite.mjs', function () {
     let versions = JSON.parse(files.get('content/versions.json')());
 
     expect(versions.data.attributes['current-version']).to.equal('v1.2.0');
+  });
+
+  describe('the page cache', function () {
+    let cacheDir;
+    let page = 'content/release/getting-started/editing.json';
+
+    beforeEach(function () {
+      cacheDir = mkdtempSync(join(tmpdir(), 'guidemaker-cache-'));
+    });
+
+    afterEach(function () {
+      rmSync(cacheDir, { recursive: true, force: true });
+    });
+
+    it('keeps the JSON of each page, and reads it in the next build', function () {
+      let built = vite.contentFiles({ root }).get(page)();
+
+      expect(vite.contentFiles({ root, cacheDir }).get(page)()).to.equal(built);
+
+      let [shard] = readdirSync(cacheDir);
+      let [entry] = readdirSync(join(cacheDir, shard));
+
+      writeFileSync(join(cacheDir, shard, entry), '"from the cache"');
+
+      expect(vite.contentFiles({ root, cacheDir }).get(page)()).to.equal(
+        '"from the cache"',
+      );
+    });
+
+    it('uses no cache when cacheDir is false', function () {
+      vite.contentFiles({ root, cacheDir: false }).get(page)();
+
+      expect(readdirSync(cacheDir)).to.deep.equal([]);
+    });
   });
 });
